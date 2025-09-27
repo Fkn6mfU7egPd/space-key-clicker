@@ -27,6 +27,7 @@
     v0.05             @202509261118 / #IZ1118 | reduce performance
     v1.00-rc-1        @202509270115 / #Ia0115 | add settings
     v1.00-rc-1        @202509270142 / #Ia0142 | add viewport
+    v1.00-rc-1        @202509271212 / #Ia1212 | remove remote noto sans jp and terrible newlines and spaces
 
   Planned updates
     v1.00-rc-2      no later than Oct 15 2025 | reduce performance and add fps display
@@ -129,6 +130,7 @@
     #settings-button {
       color: #767676;
       font-size: 40px;
+      cursor: pointer
     }
 
     .info {
@@ -526,7 +528,7 @@
             remainDisplay.textContent += " / " + formatNumber(remain.div(autoPower.mul(autoMultiplier))) + "秒)";
           };
         }else{
-          remainDisplay.textContent = "あと" + maxPurchasesFormula(price, new Decimal(item.dataset.multiplier), score).toString() + "個購入可能";
+          remainDisplay.textContent = maxPurchasesFormula(price, new Decimal(item.dataset.multiplier), score).toString() + "個購入可能";
         }
       });
 
