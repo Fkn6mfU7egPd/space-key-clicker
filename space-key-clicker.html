@@ -1,44 +1,44 @@
 <!DOCTYPE html>
 <html>
 <!--
-Changelog
-  v0.00                         Sep 18 2025 | start creating
-  v0.01                         Sep 18 2025 | add score addition feature
-  v0.01             @202509190957 / #IS0957 | adjust design
-  v0.01             @202509191018 / #IS1018 | adjust design
-  v0.01             @202509191021 / #IS1021 | adjust design
-  v0.02-beta-1      @202509191115 / #IS1115 | add purchase system
-  v0.02-beta-1      @202509191123 / #IS1123 | fix the key unresponsive bug
-  v0.02-beta-2      @202509191242 / #IS1242 | upgrade purchase system
-  v0.02             @202509191645 / #IS1645 | add auto click feature
-  v0.03-beta-1      @202509191757 / #IS1757 | adjust design of price display
-  v0.03-beta-1      @202509191804 / #IS1804 | upgrade build id generator
-  v0.03-beta-1      @202509191825 / #IS1825 | fix build id 1mo 1d later bug
-  v0.03-beta-1      @202509192217 / #IS2217 | add item block
-  v0.03-beta-1      @202509192315 / #IS2315 | replace nextSibling to parentNode
-  v0.03             @202509200053 / #IT0053 | fix long-pressing earn score bug
-  v0.04-beta-1      @202509201517 / #IT1517 | add remain scores/clicks left feature
-  v0.04-beta-1      @202509221148 / #IV1148 | make the changelog easier to reading and adjust design
-  v0.04-beta-2      @202509241022 / #IX1022 | add mobile-friendly features
-  v0.04-beta-3      @202509241032 / #IX1032 | fix item-clicking earn score bug
-  v0.04-beta-4      @202509251047 / #IY1047 | add buyable count feature
-  v0.04             @202509251411 / #IY1411 | add format config feature
-  v0.05             @202509261114 / #IZ1114 | upgrade error handling
-  v0.05             @202509261118 / #IZ1118 | reduce performance
-  v1.00-rc-1        @202509270115 / #Ia0115 | add settings
-  v1.00-rc-1        @202509270142 / #Ia0142 | add viewport
+  Changelog
+    v0.00                         Sep 18 2025 | start creating
+    v0.01                         Sep 18 2025 | add score addition feature
+    v0.01             @202509190957 / #IS0957 | adjust design
+    v0.01             @202509191018 / #IS1018 | adjust design
+    v0.01             @202509191021 / #IS1021 | adjust design
+    v0.02-beta-1      @202509191115 / #IS1115 | add purchase system
+    v0.02-beta-1      @202509191123 / #IS1123 | fix the key unresponsive bug
+    v0.02-beta-2      @202509191242 / #IS1242 | upgrade purchase system
+    v0.02             @202509191645 / #IS1645 | add auto click feature
+    v0.03-beta-1      @202509191757 / #IS1757 | adjust design of price display
+    v0.03-beta-1      @202509191804 / #IS1804 | upgrade build id generator
+    v0.03-beta-1      @202509191825 / #IS1825 | fix build id 1mo 1d later bug
+    v0.03-beta-1      @202509192217 / #IS2217 | add item block
+    v0.03-beta-1      @202509192315 / #IS2315 | replace nextSibling to parentNode
+    v0.03             @202509200053 / #IT0053 | fix long-pressing earn score bug
+    v0.04-beta-1      @202509201517 / #IT1517 | add remain scores/clicks left feature
+    v0.04-beta-1      @202509221148 / #IV1148 | make the changelog easier to reading and adjust design
+    v0.04-beta-2      @202509241022 / #IX1022 | add mobile-friendly features
+    v0.04-beta-3      @202509241032 / #IX1032 | fix item-clicking earn score bug
+    v0.04-beta-4      @202509251047 / #IY1047 | add buyable count feature
+    v0.04             @202509251411 / #IY1411 | add format config feature
+    v0.05             @202509261114 / #IZ1114 | upgrade error handling
+    v0.05             @202509261118 / #IZ1118 | reduce performance
+    v1.00-rc-1        @202509270115 / #Ia0115 | add settings
+    v1.00-rc-1        @202509270142 / #Ia0142 | add viewport
 
-Updating
-  not in progress
+  Updating
+    not in progress
 
-Planned updates
-  v1.00-rc-2      no later than Oct 15 2025 | reduce performance and add fps display
-  v1.00           no later than Oct 22 2025 | stable release
-  v1.01           no later than Nov  6 2025 | add save/load system
-  v1.02           no later than Nov 17 2025 | add save encryption system
-  v1.03           no later than Dec 15 2026 | add cooltime system
-  v1.04           no later than Jan  1 2026 | add cost performance sorting feature
-  v1.05           no later than Feb  1 2026 | add musics and sounds
+  Planned updates
+    v1.00-rc-2      no later than Oct 15 2025 | reduce performance and add fps display
+    v1.00           no later than Oct 22 2025 | stable release
+    v1.01           no later than Nov  6 2025 | add save/load system
+    v1.02           no later than Nov 17 2025 | add save encryption system
+    v1.03           no later than Dec 15 2026 | add cooltime system
+    v1.04           no later than Jan  1 2026 | add cost performance sorting feature
+    v1.05           no later than Feb  1 2026 | add musics and sounds
 -->
 <head>
   <meta charset="utf-8">
@@ -47,7 +47,6 @@ Planned updates
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap');
 
     body {
       user-select: none;
@@ -77,7 +76,7 @@ Planned updates
       gap: 16px;
       justify-content: center;
     }
-    
+
     div.item-group {
       display: flex;
       flex-direction: column;
@@ -171,36 +170,30 @@ Planned updates
       <h3>スケール方式</h3>
       <form id="scale-type">
         <label>
-          <input type="radio" name="scale-type" value="Classic">
-          クラシック
+          <input type="radio" name="scale-type" value="Classic">クラシック
         </label>
         <label>
-          <input type="radio" name="scale-type" value="Standard" checked>
-          スタンダード (デフォルト)
+          <input type="radio" name="scale-type" value="Standard" checked>スタンダード (デフォルト)
         </label>
       </form>
       <div class="info">クラシック: Q, Qui, S, Sp...<br>スタンダード: Qa, Qi, Sx, Sp...</div>
       <h3>接尾辞の前のホワイトスペース</h3>
       <form id="whitespaceBeforeSuffix">
         <label>
-          <input type="radio" name="whitespaceBeforeSuffix" value="no" checked>
-          なし (デフォルト)
+          <input type="radio" name="whitespaceBeforeSuffix" value="no" checked>なし (デフォルト)
         </label>
         <label>
-          <input type="radio" name="whitespaceBeforeSuffix" value="yes">
-          あり
+          <input type="radio" name="whitespaceBeforeSuffix" value="yes">あり
         </label>
       </form>
       <div class="info">なし: 123.4k, 133e36<br>あり: 123.4 k, 133 e36<br>(スタンダード/kは小文字で書かれています)</div>
       <h3>kを大文字にする</h3>
       <form id="uppercase-k">
         <label>
-          <input type="radio" name="uppercase-k" value="no" checked>
-          しない (デフォルト)
+          <input type="radio" name="uppercase-k" value="no" checked>しない (デフォルト)
         </label>
         <label>
-          <input type="radio" name="uppercase-k" value="yes">
-          する
+          <input type="radio" name="uppercase-k" value="yes">する
         </label>
       </form>
       <div class="info">しない: 123.4k<br>する: 123.4K<br>(接尾辞の前のホワイトスペースなしで書かれています)</div>
@@ -361,34 +354,22 @@ Planned updates
 
     document.getElementById("scale-type").addEventListener("change", event => {
       switch (event.target.value){
-        case "Classic":
-          formatCfg.type = "Classic";
-          break;
-        case "Standard":
-          formatCfg.type = "Standard";
-          break;
+        case "Classic": formatCfg.type = "Classic"; break;
+        case "Standard": formatCfg.type = "Standard"; break;
       }
     });
 
     document.getElementById("whitespaceBeforeSuffix").addEventListener("change", event => {
       switch (event.target.value){
-        case "no":
-          formatCfg.whitespaceBeforeSuffix = false;
-          break;
-        case "yes":
-          formatCfg.whitespaceBeforeSuffix = true;
-          break;
+        case "no": formatCfg.whitespaceBeforeSuffix = false; break;
+        case "yes": formatCfg.whitespaceBeforeSuffix = true; break;
       }
     });
 
     document.getElementById("uppercase-k").addEventListener("change", event => {
       switch (event.target.value){
-        case "no":
-          formatCfg.uppercaseK = false;
-          break;
-        case "yes":
-          formatCfg.uppercaseK = true;
-          break;
+        case "no": formatCfg.uppercaseK = false; break;
+        case "yes": formatCfg.uppercaseK = true; break;
       }
     });
 
@@ -448,26 +429,13 @@ Planned updates
         dataset.price = price.mul(multiplier).toString();
 
         switch(action) {
-          case "cp":
-            clickPower = clickPower.plus(amount);
-            break;
-          case "cm":
-            clickMultiplier = clickMultiplier.plus(amount);
-            break;
-          case "ap":
-            autoPower = autoPower.plus(amount);
-            break;
-          case "am":
-            autoMultiplier = autoMultiplier.plus(amount);
-            break;
-          case "mcp":
-            clickPower = clickPower.mul(amount);
-            break;
-          case "map":
-            autoPower = autoPower.mul(amount);
-            break;
-          default:
-            console.warn("Unknown action:", action);
+          case "cp": clickPower = clickPower.plus(amount); break;
+          case "cm": clickMultiplier = clickMultiplier.plus(amount); break;
+          case "ap": autoPower = autoPower.plus(amount); break;
+          case "am": autoMultiplier = autoMultiplier.plus(amount); break;
+          case "mcp": clickPower = clickPower.mul(amount); break;
+          case "map": autoPower = autoPower.mul(amount); break;
+          default: console.warn("Unknown action:", action);
         }
       });
     });
@@ -475,27 +443,27 @@ Planned updates
     function formatNumber(num){
       num = new Decimal(num);
       const suffixes = (formatCfg.type === "Standard") ? [
-        { exp: 3, suffix: (formatCfg.uppercaseK ? "K" : "k") },
-        { exp: 6, suffix: "M" },
-        { exp: 9, suffix: "B" },
-        { exp: 12, suffix: "T" },
-        { exp: 15, suffix: "Qa" },
-        { exp: 18, suffix: "Qi" },
-        { exp: 21, suffix: "Sx" },
-        { exp: 24, suffix: "Sp" },
-        { exp: 27 },
+        {exp: 3, suffix: (formatCfg.uppercaseK ? "K" : "k")},
+        {exp: 6, suffix: "M"},
+        {exp: 9, suffix: "B"},
+        {exp: 12, suffix: "T"},
+        {exp: 15, suffix: "Qa"},
+        {exp: 18, suffix: "Qi"},
+        {exp: 21, suffix: "Sx"},
+        {exp: 24, suffix: "Sp"},
+        {exp: 27}
       ] : (formatCfg.type === "Classic") ? [
-        { exp: 3, suffix: (formatCfg.uppercaseK ? "K" : "k") },
-        { exp: 6, suffix: "M" },
-        { exp: 9, suffix: "B" },
-        { exp: 12, suffix: "T" },
-        { exp: 15, suffix: "Q" },
-        { exp: 18, suffix: "Qui" },
-        { exp: 21, suffix: "S" },
-        { exp: 24, suffix: "Sp" },
-        { exp: 27 },
+        {exp: 3, suffix: (formatCfg.uppercaseK ? "K" : "k")},
+        {exp: 6, suffix: "M"},
+        {exp: 9, suffix: "B"},
+        {exp: 12, suffix: "T"},
+        {exp: 15, suffix: "Q"},
+        {exp: 18, suffix: "Qui"},
+        {exp: 21, suffix: "S"},
+        {exp: 24, suffix: "Sp"},
+        {exp: 27}
       ] : [
-        { exp: 0 }
+        {exp: 0}
       ];
       suffixes.sort((a, b) => b.exp - a.exp);
 
@@ -516,7 +484,7 @@ Planned updates
       const priceDisplay = document.createElement("div");
       priceDisplay.className = "price-display";
       item.parentElement.append(priceDisplay);
-      
+
       const remainDisplay = document.createElement("div");
       remainDisplay.className = "remain-display";
       item.parentElement.append(remainDisplay);
@@ -578,7 +546,7 @@ Planned updates
       prevTime = Date.now();
       requestAnimationFrame(tick);
     }
-    
+
     tick();
   </script>
 </body>
