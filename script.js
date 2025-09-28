@@ -10,6 +10,8 @@ let autoPower = new Decimal(0);
 let autoMultiplier = new Decimal(1);
 let prevTime = Date.now();
 let pressing = false;
+let fps = 0;
+let fpsPrevTime = Date.now();
 let formatCfg = {
   type: "Standard", // Classic (Q,Qui,S,Sp...) | Standard (Qa,Qi,Sx,Sp...)
   whitespaceBeforeSuffix: false, // false (e.g. 123.4k, 133e36) | true (e.g. 123.4 k, 133 e36) | (sample is written on standard type and lowercase k)
@@ -155,18 +157,6 @@ items.forEach(item => {
   item.parentElement.append(remainDisplay);
 });
 
-const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".split("");
-const version = document.getElementById('version').textContent;
-const match = version.match(/@(\d{4})(\d{2})(\d{2})(\d{4})/);
-if (match) {
-  const [date, year, month, day, time] = match;
-  const buildId = 'build #' +
-    alphabets[parseInt(month) - 1] +
-    alphabets[parseInt(day) - 1] +
-    time;
-  document.getElementById('version-short').textContent = buildId;
-}
-
 function maxPurchasesFormula(a, x, y){ // 初期価格、倍率、所持金
   if (x.equals(1)) return y.div(a).floor();
   const one = new Decimal(1)
@@ -208,6 +198,13 @@ function tick(){
 
   scoreElem.textContent = formatNumber(score);
   score = score.plus(autoPower.mul(autoMultiplier).mul((Date.now() - prevTime) / 1000));
+
+  fps++;
+  if (Date.now() - fpsPrevTime >= 1000){
+    document.getElementById("fpsDisplay").textContent = fps.toString();
+    fpsPrevTime = Date.now();
+    fps = 0;
+  }
   prevTime = Date.now();
   requestAnimationFrame(tick);
 }
