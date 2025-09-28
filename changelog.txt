@@ -1,36 +1,36 @@
 Changelog
-  v0.00                         Sep 18 2025 | start creating
-  v0.01                         Sep 18 2025 | add score addition feature
-  v0.01             @202509190957 / #IS0957 | adjust design
-  v0.01             @202509191018 / #IS1018 | adjust design
-  v0.01             @202509191021 / #IS1021 | adjust design
-  v0.02-beta-1      @202509191115 / #IS1115 | add purchase system
-  v0.02-beta-1      @202509191123 / #IS1123 | fix the key unresponsive bug
-  v0.02-beta-2      @202509191242 / #IS1242 | upgrade purchase system
-  v0.02             @202509191645 / #IS1645 | add auto click feature
-  v0.03-beta-1      @202509191757 / #IS1757 | adjust design of price display
-  v0.03-beta-1      @202509191804 / #IS1804 | upgrade build id generator
-  v0.03-beta-1      @202509191825 / #IS1825 | fix build id 1mo 1d later bug
-  v0.03-beta-1      @202509192217 / #IS2217 | add item block
-  v0.03-beta-1      @202509192315 / #IS2315 | replace nextSibling to parentNode
-  v0.03             @202509200053 / #IT0053 | fix long-pressing earn score bug
-  v0.04-beta-1      @202509201517 / #IT1517 | add remain scores/clicks left feature
-  v0.04-beta-1      @202509221148 / #IV1148 | make the changelog easier to reading and adjust design
-  v0.04-beta-2      @202509241022 / #IX1022 | add mobile-friendly features
-  v0.04-beta-3      @202509241032 / #IX1032 | fix item-clicking earn score bug
-  v0.04-beta-4      @202509251047 / #IY1047 | add buyable count feature
-  v0.04             @202509251411 / #IY1411 | add format config feature
-  v0.05             @202509261114 / #IZ1114 | upgrade error handling
-  v0.05             @202509261118 / #IZ1118 | reduce performance
-  v1.00-rc-1        @202509270115 / #Ia0115 | add settings
-  v1.00-rc-1        @202509270142 / #Ia0142 | add viewport
-  v1.00-rc-1        @202509271212 / #Ia1212 | remove remote noto sans jp and terrible newlines and spaces
+  v0.00                     Sep 18 2025 | start creating
+  v0.01                     Sep 18 2025 | add score addition feature
+  v0.01                   @202509190957 | adjust design
+  v0.01                   @202509191018 | adjust design
+  v0.01                   @202509191021 | adjust design
+  v0.02-beta-1            @202509191115 | add purchase system
+  v0.02-beta-1            @202509191123 | fix the key unresponsive bug
+  v0.02-beta-2            @202509191242 | upgrade purchase system
+  v0.02                   @202509191645 | add auto click feature
+  v0.03-beta-1            @202509191757 | adjust design of price display
+  v0.03-beta-1            @202509191804 | upgrade build id generator
+  v0.03-beta-1            @202509191825 | fix build id 1mo 1d later bug
+  v0.03-beta-1            @202509192217 | add item block
+  v0.03-beta-1            @202509192315 | replace nextSibling to parentNode
+  v0.03                   @202509200053 | fix long-pressing earn score bug
+  v0.04-beta-1            @202509201517 | add remain scores/clicks left feature
+  v0.04-beta-1            @202509221148 | make the changelog easier to reading and adjust design
+  v0.04-beta-2            @202509241022 | add mobile-friendly features
+  v0.04-beta-3            @202509241032 | fix item-clicking earn score bug
+  v0.04-beta-4            @202509251047 | add buyable count feature
+  v0.04                   @202509251411 | add format config feature
+  v0.05                   @202509261114 | upgrade error handling
+  v0.05                   @202509261118 | reduce performance
+  v1.00-rc1              @202509270115 | add settings
+  v1.00-rc1              @202509270142 | add viewport
+  v1.00-rc1              @202509271212 | remove remote noto sans jp and terrible newlines and spaces
 
 Planned updates
-  v1.00-rc-2      no later than Oct 15 2025 | reduce performance and add fps display
-  v1.00           no later than Oct 22 2025 | stable release
-  v1.01           no later than Nov  6 2025 | add save/load system
-  v1.02           no later than Nov 17 2025 | add save encryption system
-  v1.03           no later than Dec 15 2026 | add cooltime system
-  v1.04           no later than Jan  1 2026 | add cost performance sorting feature
-  v1.05           no later than Feb  1 2026 | add musics and sounds
+  v1.00-rc2  no later than Oct 15 2025 | reduce performance and add fps display
+  v1.00       no later than Oct 22 2025 | stable release
+  v1.01       no later than Nov  6 2025 | add save/load system
+  v1.02       no later than Nov 17 2025 | add save encryption system
+  v1.03       no later than Dec 15 2026 | add cooltime system
+  v1.04       no later than Jan  1 2026 | add cost performance sorting feature
+  v1.05       no later than Feb  1 2026 | add musics and sounds
