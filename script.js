@@ -18,12 +18,13 @@ let formatCfg = {
   uppercaseK: false, // false (e.g. 123.4k) | true (e.g. 123.4K) | (sample is written on no whitespace before suffix)
 };
 let isSettingsPanelOpen = false;
+let clickPowerDirty = true;
+let autoPowerDirty = true;
 
 document.getElementById("scale-type").addEventListener("change", event => {
-  switch (event.target.value){
-    case "Classic": formatCfg.type = "Classic"; break;
-    case "Standard": formatCfg.type = "Standard"; break;
-  }
+  formatCfg.type = event.target.value;
+  clickPowerDirty = true;
+  autoPowerDirty = true;
 });
 
 document.getElementById("whitespaceBeforeSuffix").addEventListener("change", event => {
@@ -31,6 +32,8 @@ document.getElementById("whitespaceBeforeSuffix").addEventListener("change", eve
     case "no": formatCfg.whitespaceBeforeSuffix = false; break;
     case "yes": formatCfg.whitespaceBeforeSuffix = true; break;
   }
+  clickPowerDirty = true;
+  autoPowerDirty = true;
 });
 
 document.getElementById("uppercase-k").addEventListener("change", event => {
@@ -38,6 +41,8 @@ document.getElementById("uppercase-k").addEventListener("change", event => {
     case "no": formatCfg.uppercaseK = false; break;
     case "yes": formatCfg.uppercaseK = true; break;
   }
+  clickPowerDirty = true;
+  autoPowerDirty = true;
 });
 
 document.getElementById("themecolor").addEventListener("change", event => {
@@ -96,12 +101,12 @@ document.querySelectorAll('.item').forEach(item => {
     dataset.price = price.mul(multiplier).toString();
 
     switch(action) {
-      case "cp": clickPower = clickPower.plus(amount); break;
-      case "cm": clickMultiplier = clickMultiplier.plus(amount); break;
-      case "ap": autoPower = autoPower.plus(amount); break;
-      case "am": autoMultiplier = autoMultiplier.plus(amount); break;
-      case "mcp": clickPower = clickPower.mul(amount); break;
-      case "map": autoPower = autoPower.mul(amount); break;
+      case "cp": clickPower = clickPower.plus(amount); clickPowerDirty = true; break;
+      case "cm": clickMultiplier = clickMultiplier.plus(amount); clickPowerDirty = true; break;
+      case "ap": autoPower = autoPower.plus(amount); autoPowerDirty = true; break;
+      case "am": autoMultiplier = autoMultiplier.plus(amount); autoPowerDirty = true; break;
+      case "mcp": clickPower = clickPower.mul(amount); clickPowerDirty = true; break;
+      case "map": autoPower = autoPower.mul(amount); autoPowerDirty = true; break;
       default: console.warn("Unknown action:", action);
     }
   });
@@ -188,13 +193,19 @@ function tick(){
     }
   });
 
-  document.getElementById("clickPowerDisplay").textContent = "クリックパワー: " +
-  formatNumber(clickPower.mul(clickMultiplier)) + " (" +
-  formatNumber(clickPower) + " +" + formatNumber(clickMultiplier.minus(1).mul(100)) + "%)";
+  if (clickPowerDirty){
+    document.getElementById("clickPowerDisplay").textContent = "クリックパワー: " +
+    formatNumber(clickPower.mul(clickMultiplier)) + " (" +
+    formatNumber(clickPower) + " +" + formatNumber(clickMultiplier.minus(1).mul(100)) + "%)";
+    clickPowerDirty = false;
+  }
 
+  if (autoPowerDirty){
   document.getElementById("autoPowerDisplay").textContent = "自動: " +
   formatNumber(autoPower.mul(autoMultiplier)) + " (" +
   formatNumber(autoPower) + " +" + formatNumber(autoMultiplier.minus(1).mul(100)) + "%)";
+  autoPowerDirty = true;
+  }
 
   scoreElem.textContent = formatNumber(score);
   score = score.plus(autoPower.mul(autoMultiplier).mul((Date.now() - prevTime) / 1000));
