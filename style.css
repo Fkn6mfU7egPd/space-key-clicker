@@ -4,6 +4,26 @@ body {
   --themecolor: lightblue;
 }
 
+@media (prefers-color-scheme: dark){
+  body {
+    background: #2c2c2c;
+    color: silver;
+    --themecolor: #2c2c80;
+  }
+
+  #themecolor {
+    background: #2c2c2c !important;
+  }
+
+  div.item {
+    border-color: silver !important;
+  }
+
+  div.item:hover {
+    background: #393939 !important;
+  }
+}
+
 #version {
   font-size: 12px;
   font-family: "Inconsolata", monospace;
