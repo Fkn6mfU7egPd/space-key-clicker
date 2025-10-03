@@ -1,7 +1,46 @@
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap');
 
 body {
-  --themecolor: lightblue;
+  --themecolor-light: lightblue;
+  --themecolor-dark: #2c2c80;
+}
+
+@media (prefers-color-scheme: dark){
+  body {
+    background: #2c2c2c;
+    color: silver;
+    --themecolor: var(--themecolor-dark);
+  }
+
+  div.item {
+    border-color: silver !important;
+  }
+
+  div.item:hover {
+    background: #393939 !important;
+  }
+
+  form#themecolor-light {
+    display: none;
+  }
+}
+
+@media (prefers-color-scheme: light){
+  body {
+    --themecolor: var(--themecolor-light);
+  }
+
+  div.item {
+    border-color: black !important;
+  }
+
+  div.item:hover {
+    background: #e0e0e0 !important;
+  }
+
+  form#themecolor-dark {
+    display: none;
+  }
 }
 
 #version {
@@ -48,10 +87,6 @@ div.item {
   user-select: none;
   margin: 12px;
   transition: background 0.1s linear;
-}
-
-div.item:hover {
-  background: #e0e0e0;
 }
 
 div.remain-display {
