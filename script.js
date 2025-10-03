@@ -40,8 +40,12 @@ document.getElementById("uppercase-k").addEventListener("change", event => {
   }
 });
 
-document.getElementById("themecolor").addEventListener("change", event => {
-  document.body.style.setProperty("--themecolor", event.target.value);
+document.getElementById("themecolor-light").addEventListener("change", event => {
+  document.body.style.setProperty("--themecolor-light", event.target.value);
+});
+
+document.getElementById("themecolor-dark").addEventListener("change", event => {
+  document.body.style.setProperty("--themecolor-dark", event.target.value);
 });
 
 // 有効数字digits桁まで切り落とす
