@@ -85,33 +85,6 @@ addEventListener("keyup", event => {
   if (event.key === " ") pressing = false;
 });
 
-document.querySelectorAll('.item').forEach(item => {
-  item.addEventListener('click', () => {
-    const dataset = item.dataset;
-
-    const price = new Decimal(dataset.price);
-    const multiplier = new Decimal(dataset.multiplier);
-    const amount = new Decimal(dataset.amount);
-    const action = dataset.action;
-
-    if (score.lt(price)) return;
-
-    score = score.sub(price);
-
-    dataset.price = price.mul(multiplier).toString();
-
-    switch(action) {
-      case "cp": clickPower = clickPower.plus(amount); clickPowerDirty = true; break;
-      case "cm": clickMultiplier = clickMultiplier.plus(amount); clickPowerDirty = true; break;
-      case "ap": autoPower = autoPower.plus(amount); autoPowerDirty = true; break;
-      case "am": autoMultiplier = autoMultiplier.plus(amount); autoPowerDirty = true; break;
-      case "mcp": clickPower = clickPower.mul(amount); clickPowerDirty = true; break;
-      case "map": autoPower = autoPower.mul(amount); autoPowerDirty = true; break;
-      default: console.warn("Unknown action:", action);
-    }
-  });
-});
-
 function formatNumber(num){
   num = new Decimal(num);
   const suffixes = (formatCfg.type === "Standard") ? [
@@ -160,6 +133,32 @@ items.forEach(item => {
   const remainDisplay = document.createElement("div");
   remainDisplay.className = "remain-display";
   item.parentElement.append(remainDisplay);
+
+  item.addEventListener('click', () => {
+    const {price, multiplier, amount} = item;
+    const action = item.dataset.action;
+
+    if (score.lt(price)) return;
+
+    score = score.sub(price);
+
+    item.price = price.mul(multiplier).toString();
+
+    switch(action) {
+      case "cp": clickPower = clickPower.plus(amount); clickPowerDirty = true; break;
+      case "cm": clickMultiplier = clickMultiplier.plus(amount); clickPowerDirty = true; break;
+      case "ap": autoPower = autoPower.plus(amount); autoPowerDirty = true; break;
+      case "am": autoMultiplier = autoMultiplier.plus(amount); autoPowerDirty = true; break;
+      case "mcp": clickPower = clickPower.mul(amount); clickPowerDirty = true; break;
+      case "map": autoPower = autoPower.mul(amount); autoPowerDirty = true; break;
+      default: console.warn("Unknown action:", action);
+    }
+  });
+
+  item.price = new Decimal(item.dataset.price);
+  item.multiplier = new Decimal(item.dataset.multiplier);
+  item.amount = new Decimal(item.dataset.amount);
+  item.remainDisplay = remainDisplay;
 });
 
 function maxPurchasesFormula(a, x, y){ // 初期価格、倍率、所持金
@@ -174,12 +173,9 @@ function maxPurchasesFormula(a, x, y){ // 初期価格、倍率、所持金
 
 function tick(){
   items.forEach(item => {
-    const price = new Decimal(item.dataset.price);
-    const parent = item.parentElement;
-    parent.getElementsByClassName("price-display")[0].textContent = "値段: " + formatNumber(price);
-
-    const remainDisplay = parent.getElementsByClassName("remain-display")[0];
-    const remain = price.minus(score)
+    const {price, multiplier, remainDisplay} = item;
+    remainDisplay.textContent = "値段: " + formatNumber(price);
+    const remain = price.minus(score);
     if (score.lt(price)){
       remainDisplay.textContent = "あと" + formatNumber(remain) + "スコア\n";
       remainDisplay.textContent += "(" + formatNumber(remain.div(clickPower.mul(clickMultiplier))) + "クリック";
@@ -189,7 +185,7 @@ function tick(){
         remainDisplay.textContent += " / " + formatNumber(remain.div(autoPower.mul(autoMultiplier))) + "秒)";
       };
     }else{
-      remainDisplay.textContent = maxPurchasesFormula(price, new Decimal(item.dataset.multiplier), score).toString() + "個購入可能";
+      remainDisplay.textContent = maxPurchasesFormula(price, multiplier, score).toString() + "個購入可能";
     }
   });
 
@@ -201,10 +197,10 @@ function tick(){
   }
 
   if (autoPowerDirty){
-  document.getElementById("autoPowerDisplay").textContent = "自動: " +
-  formatNumber(autoPower.mul(autoMultiplier)) + " (" +
-  formatNumber(autoPower) + " +" + formatNumber(autoMultiplier.minus(1).mul(100)) + "%)";
-  autoPowerDirty = true;
+    document.getElementById("autoPowerDisplay").textContent = "自動: " +
+    formatNumber(autoPower.mul(autoMultiplier)) + " (" +
+    formatNumber(autoPower) + " +" + formatNumber(autoMultiplier.minus(1).mul(100)) + "%)";
+    autoPowerDirty = true;
   }
 
   scoreElem.textContent = formatNumber(score);
