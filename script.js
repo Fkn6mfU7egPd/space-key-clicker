@@ -129,6 +129,41 @@ function formatNumber(num){
   }
 }
 
+const themeColors = {
+  light: [
+    {color: "lightblue", colorName: "ライトブルー (デフォルト)", selected: true},
+    {color: "lightpink", colorName: "ライトピンク"},
+    {color: "lightgray", colorName: "ライトグレー"},
+    {color: "mediumaquamarine", colorName: "ミントグリーン"},
+    {color: "lightgreen", colorName: "グリーン"},
+    {color: "plum", colorName: "マゼンタ"},
+    {color: "peachpuff", colorName: "ベージュ"},
+    {color: "paleturquoise", colorName: "シアン"},
+    {color: "thistle", colorName: "パープル"},
+    {color: "wheat", colorName: "イエロー"},
+    {color: "burlywood", colorName: "ブラウン"},
+    {color: "skyblue", colorName: "スカイブルー"}
+  ],
+  dark: [
+    {color: "#2c2c80", colorName: "#2c2c80 (デフォルト)", selected: true},
+    {color: "darkred", colorName: "ダークレッド"}
+  ]
+}
+
+themeColors.light.forEach(e => {
+  const button = document.createElement("label");
+  const br = document.createElement("br");
+  button.innerHTML = `<input type="radio" name="themecolor-light" value="${e.color}"${e.selected ? " checked" : ""}><span style="color: ${e.color};">●</span>${e.colorName}`
+  document.querySelector("#themecolor-light").append(button, br);
+});
+
+themeColors.dark.forEach(e => {
+  const button = document.createElement("label");
+  const br = document.createElement("br");
+  button.innerHTML = `<input type="radio" name="themecolor-dark" value="${e.color}"${e.selected ? " checked" : ""}><span style="color: ${e.color};">●</span>${e.colorName}`
+  document.querySelector("#themecolor-dark").append(button, br);
+});
+
 items.forEach(item => {
   const priceDisplay = document.createElement("div");
   priceDisplay.className = "price-display";
