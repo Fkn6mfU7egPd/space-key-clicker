@@ -197,6 +197,7 @@ items.forEach(item => {
   item.price = new Decimal(item.dataset.price);
   item.multiplier = new Decimal(item.dataset.multiplier);
   item.amount = new Decimal(item.dataset.amount);
+  item.priceDisplay = priceDisplay;
   item.remainDisplay = remainDisplay;
 });
 
@@ -212,8 +213,8 @@ function maxPurchasesFormula(a, x, y){ // 初期価格、倍率、所持金
 
 function tick(){
   items.forEach(item => {
-    const {price, multiplier, remainDisplay} = item;
-    remainDisplay.textContent = "値段: " + formatNumber(price);
+    const {price, multiplier, priceDisplay, remainDisplay} = item;
+    priceDisplay.textContent = "値段: " + formatNumber(price);
     const remain = price.minus(score);
     if (score.lt(price)){
       remainDisplay.textContent = "あと" + formatNumber(remain) + "スコア\n";
