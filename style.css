@@ -72,6 +72,10 @@ div.item-group {
   flex-direction: column;
 }
 
+div.item-block {
+  user-select: none;
+}
+
 div.item {
   border: 3px black solid;
   border-radius: 20px;
@@ -84,7 +88,6 @@ div.item {
   text-align: center;
   justify-content: center;
   align-items: center;
-  user-select: none;
   margin: 12px;
   transition: background 0.1s linear;
 }
@@ -92,6 +95,7 @@ div.item {
 div.remain-display {
   white-space: pre;
   font-size: 10px;
+  height: 32px;
 }
 
 #score {
