@@ -18,109 +18,59 @@
     <div id="settings-button" class="material-symbols-rounded">settings</div>
     <div id="settings-panel" class="rounded" style="clip-path: inset(0 0 100% 0);">
       <h2>設定</h2>
-      <h3>スケール方式</h3>
-      <form id="scale-type">
-        <label>
-          <input type="radio" name="scale-type" value="Classic">クラシック
-        </label>
-        <label>
-          <input type="radio" name="scale-type" value="Standard" checked>スタンダード (デフォルト)
-        </label>
-      </form>
-      <div class="info">クラシック: Q, Qui, S, Sp...<br>スタンダード: Qa, Qi, Sx, Sp...</div>
-      <h3>接尾辞の前のホワイトスペース</h3>
-      <form id="whitespaceBeforeSuffix">
-        <label>
-          <input type="radio" name="whitespaceBeforeSuffix" value="no" checked>なし (デフォルト)
-        </label>
-        <label>
-          <input type="radio" name="whitespaceBeforeSuffix" value="yes">あり
-        </label>
-      </form>
-      <div class="info">なし: 123.4k, 133e36<br>あり: 123.4 k, 133 e36<br>(スタンダード/kは小文字で書かれています)</div>
-      <h3>kを大文字にする</h3>
-      <form id="uppercase-k">
-        <label>
-          <input type="radio" name="uppercase-k" value="no" checked>しない (デフォルト)
-        </label>
-        <label>
-          <input type="radio" name="uppercase-k" value="yes">する
-        </label>
-      </form>
-      <div class="info">しない: 123.4k<br>する: 123.4K<br>(接尾辞の前のホワイトスペースなしで書かれています)</div>
-      <h3>テーマカラー (ベータ)</h3>
-      <form id="themecolor-light" class="rounded" style="background: white;">
-        <strong>基本色</strong><br>
-        <label>
-          <input type="radio" name="themecolor-light" value="lightblue" checked>
-          <span style="color: lightblue;">●</span>ライトブルー (デフォルト)
-        </label><br>
-        <label>
-          <input type="radio" name="themecolor-light" value="lightpink">
-          <span style="color: lightpink;">●</span>ライトピンク
-        </label><br>
-        <label>
-          <input type="radio" name="themecolor-light" value="lightgray">
-          <span style="color: lightgray;">●</span>ライトグレー
-        </label><br>
-        <strong>その他の色</strong><br>
-        <label>
-          <input type="radio" name="themecolor-light" value="mediumaquamarine">
-          <span style="color: mediumaquamarine;">●</span>ミントグリーン
-        </label><br>
-        <label>
-          <input type="radio" name="themecolor-light" value="lightgreen">
-          <span style="color: lightgreen;">●</span>グリーン
-        </label><br>
-        <label>
-          <input type="radio" name="themecolor-light" value="plum">
-          <span style="color: plum;">●</span>マゼンタ
-        </label><br>
-        <label>
-          <input type="radio" name="themecolor-light" value="peachpuff">
-          <span style="color: peachpuff;">●</span>ベージュ
-        </label><br>
-        <label>
-          <input type="radio" name="themecolor-light" value="paleturquoise">
-          <span style="color: paleturquoise;">●</span>シアン
-        </label><br>
-        <label>
-          <input type="radio" name="themecolor-light" value="thistle">
-          <span style="color: thistle;">●</span>パープル
-        </label><br>
-        <label>
-          <input type="radio" name="themecolor-light" value="wheat">
-          <span style="color: wheat;">●</span>イエロー
-        </label><br>
-        <label>
-          <input type="radio" name="themecolor-light" value="burlywood">
-          <span style="color: burlywood;">●</span>ブラウン
-        </label><br>
-        <label>
-          <input type="radio" name="themecolor-light" value="skyblue">
-          <span style="color: skyblue;">●</span>スカイブルー
-        </label><br>
-      </form>
-      <form id="themecolor-dark" class="rounded" style="background: #2c2c2c; color: silver;">
-        <label>
-          <input type="radio" name="themecolor-dark" value="#2c2c80" checked>
-          <span style="color: #2c2c80;">●</span>#2c2c80 (デフォルト)
-        </label><br>
-        <label>
-          <input type="radio" name="themecolor-dark" value="darkred">
-          <span style="color: darkred;">●</span>ダークレッド
-        </label><br>
-      </form>
-      <h3>デザイン (準備中)</h3>
-      <form id="design">
-        <label>
-          <input type="radio" name="design" value="Original" disabled>オリジナル
-        </label><br>
-        <label>
-          <input type="radio" name="design" value="Modern" checked>モダン (デフォルト)
-        </label>
-      </form>
-      <div class="info">オリジナル: 角張ったデザイン<br>モダン: 丸みを帯びたデザイン</div>
+      <section>
+        <h3>スケール方式</h3>
+        <form id="scale-type">
+          <label>
+            <input type="radio" name="scale-type" value="Classic">クラシック
+          </label>
+          <label>
+            <input type="radio" name="scale-type" value="Standard" checked>スタンダード (デフォルト)
+          </label>
+        </form>
+      </section>
+      <section>
+        <div class="info">クラシック: Q, Qui, S, Sp...<br>スタンダード: Qa, Qi, Sx, Sp...</div>
+        <h3>接尾辞の前のホワイトスペース</h3>
+        <form id="whitespaceBeforeSuffix">
+          <label>
+            <input type="radio" name="whitespaceBeforeSuffix" value="no" checked>なし (デフォルト)
+          </label>
+          <label>
+            <input type="radio" name="whitespaceBeforeSuffix" value="yes">あり
+          </label>
+        </form>
+        <div class="info">なし: 123.4k, 133e36<br>あり: 123.4 k, 133 e36<br>(スタンダード/kは小文字で書かれています)</div>
+      </section>
+      <section>
+        <h3>kを大文字にする</h3>
+        <form id="uppercase-k">
+          <label>
+            <input type="radio" name="uppercase-k" value="no" checked>しない (デフォルト)
+          </label>
+          <label>
+            <input type="radio" name="uppercase-k" value="yes">する
+          </label>
+        </form>
+        <div class="info">しない: 123.4k<br>する: 123.4K<br>(接尾辞の前のホワイトスペースなしで書かれています)</div>
+      </section>
+      <section>
+        <h3>テーマカラー (ベータ)</h3>
+        <form id="themecolor-light" class="rounded" style="background: white;"></form>
+        <form id="themecolor-dark" class="rounded" style="background: #2c2c2c; color: silver;"></form>
+      </section>
+      <section>
+        <h3>デザイン (準備中)</h3>
+        <form id="design">
+          <label>
+            <input type="radio" name="design" value="Original" disabled>オリジナル
+          </label><br>
+          <label>
+            <input type="radio" name="design" value="Modern" checked>モダン (デフォルト)
+          </label>
+        </form>
+        <div class="info">オリジナル: 角張ったデザイン<br>モダン: 丸みを帯びたデザイン</div>
+      </section>
     </div>
   </div>
   <div id="item-wrapper">
