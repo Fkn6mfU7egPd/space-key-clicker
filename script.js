@@ -181,7 +181,7 @@ items.forEach(item => {
 
     score = score.sub(price);
 
-    item.price = price.mul(multiplier).toString();
+    item.price = price.mul(multiplier);
 
     switch(action) {
       case "cp": clickPower = clickPower.plus(amount); clickPowerDirty = true; break;
@@ -202,7 +202,7 @@ items.forEach(item => {
 
 function maxPurchasesFormula(a, x, y){ // 初期価格、倍率、所持金
   if (x.equals(1)) return y.div(a).floor();
-  const one = new Decimal(1)
+  const one = new Decimal(1);
   const threshold = one.minus(y.div(a).mul(one.minus(x)));
   if (threshold.lte(0)) return 0;
 
