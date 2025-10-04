@@ -46,11 +46,11 @@ document.getElementById("uppercase-k").addEventListener("change", event => {
 });
 
 document.getElementById("theme-color-light").addEventListener("change", event => {
-  document.body.style.setProperty("--themecolor-light", event.target.value);
+  document.body.style.setProperty("--theme-color-light", event.target.value);
 });
 
 document.getElementById("theme-color-dark").addEventListener("change", event => {
-  document.body.style.setProperty("--themecolor-dark", event.target.value);
+  document.body.style.setProperty("--theme-color-dark", event.target.value);
 });
 
 // 有効数字digits桁まで切り落とす
