@@ -1,54 +1,53 @@
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap');
 
-body {
-  --themecolor-light: lightblue;
-  --themecolor-dark: #2c2c80;
-}
-
 @media (prefers-color-scheme: light){
-  body {
-    --themecolor: var(--themecolor-light);
-  }
-
-  div.item {
-    border-color: black !important;
-  }
-
-  div.item:hover {
-    background: #e0e0e0 !important;
-  }
-
-  form#themecolor-dark {
-    display: none;
-  }
-
-  .info {
-    color: dimgray;
+  :root {
+    --background: white;
+    --text-color: black;
+    --theme-color: lightblue;
+    --item-border-color: black;
+    --item-hover-background: #e0e0e0;
+    --settings-theme-color-light: block;
+    --settings-theme-color-dark: none;
+    --setting-description: dimgray;
   }
 }
 
 @media (prefers-color-scheme: dark){
-  body {
-    background: #2c2c2c;
-    color: silver;
-    --themecolor: var(--themecolor-dark);
+  :root {
+    --background: #2c2c2c;
+    --text-color: silver;
+    --theme-color: #2c2c80;
+    --item-border-color: silver;
+    --item-hover-background: #393939;
+    --settings-theme-color-light: none;
+    --settings-theme-color-dark: block;
+    --settings-description: #adadad;
   }
+}
 
-  div.item {
-    border-color: silver !important;
-  }
+body {
+  background: var(--background);
+  color: var(--text-color);
+}
 
-  div.item:hover {
-    background: #393939 !important;
+div.item {
+  border-color: var(--item-border-color);
+  :hover {
+    background: var(--item-hover-background);
   }
+}
 
-  form#themecolor-light {
-    display: none;
-  }
+form#theme-color-light {
+  display: var(--settings-theme-color-light);
+}
 
-  .info {
-    color: #adadad;
-  }
+form#theme-color-dark {
+  display: var(--settings-theme-color-dark);
+}
+
+.info {
+  color: var(--setting-description)
 }
 
 #version {
@@ -85,7 +84,7 @@ div.item-block {
 }
 
 div.item {
-  border: 3px black solid;
+  border: 3px solid;
   border-radius: 20px;
   display: flex;
   width: 150px;
@@ -142,7 +141,7 @@ div.remain-display {
 
 #settings-panel {
   transition: clip-path 0.3s ease-out;
-  background: var(--themecolor);
+  background: var(--theme-color);
   max-height: calc(100vh - 210px);
   overflow: scroll;
 }

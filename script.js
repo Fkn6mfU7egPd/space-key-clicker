@@ -45,11 +45,11 @@ document.getElementById("uppercase-k").addEventListener("change", event => {
   autoPowerDirty = true;
 });
 
-document.getElementById("themecolor-light").addEventListener("change", event => {
+document.getElementById("theme-color-light").addEventListener("change", event => {
   document.body.style.setProperty("--themecolor-light", event.target.value);
 });
 
-document.getElementById("themecolor-dark").addEventListener("change", event => {
+document.getElementById("theme-color-dark").addEventListener("change", event => {
   document.body.style.setProperty("--themecolor-dark", event.target.value);
 });
 
@@ -154,14 +154,14 @@ themeColors.light.forEach(e => {
   const button = document.createElement("label");
   const br = document.createElement("br");
   button.innerHTML = `<input type="radio" name="themecolor-light" value="${e.color}"${e.selected ? " checked" : ""}><span style="color: ${e.color};">●</span>${e.colorName}`
-  document.querySelector("#themecolor-light").append(button, br);
+  document.querySelector("#theme-color-light").append(button, br);
 });
 
 themeColors.dark.forEach(e => {
   const button = document.createElement("label");
   const br = document.createElement("br");
   button.innerHTML = `<input type="radio" name="themecolor-dark" value="${e.color}"${e.selected ? " checked" : ""}><span style="color: ${e.color};">●</span>${e.colorName}`
-  document.querySelector("#themecolor-dark").append(button, br);
+  document.querySelector("#theme-color-dark").append(button, br);
 });
 
 items.forEach(item => {
