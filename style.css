@@ -4,12 +4,15 @@
   :root {
     --background: white;
     --text-color: black;
-    --theme-color: lightblue;
+    --theme-color-light: lightblue;
     --item-border-color: black;
     --item-hover-background: #e0e0e0;
     --settings-theme-color-light: block;
     --settings-theme-color-dark: none;
-    --setting-description: dimgray;
+    --settings-description: dimgray;
+  }
+  #settings-panel {
+    background: var(--theme-color-light);
   }
 }
 
@@ -17,12 +20,15 @@
   :root {
     --background: #2c2c2c;
     --text-color: silver;
-    --theme-color: #2c2c80;
+    --theme-color-dark: #2c2c80;
     --item-border-color: silver;
     --item-hover-background: #393939;
     --settings-theme-color-light: none;
     --settings-theme-color-dark: block;
     --settings-description: #adadad;
+  }
+  #settings-panel {
+    background: var(--theme-color-dark);
   }
 }
 
@@ -47,7 +53,7 @@ form#theme-color-dark {
 }
 
 .info {
-  color: var(--setting-description)
+  color: var(--settings-description)
 }
 
 #version {
@@ -141,7 +147,6 @@ div.remain-display {
 
 #settings-panel {
   transition: clip-path 0.3s ease-out;
-  background: var(--theme-color);
   max-height: calc(100vh - 210px);
   overflow: scroll;
 }
