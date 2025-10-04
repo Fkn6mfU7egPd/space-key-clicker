@@ -129,6 +129,20 @@ function formatNumber(num){
   }
 }
 
+const themeColors = {
+  light: [
+    {color: "lightblue", colorName: "ライトブルー (デフォルト)"},
+    {color: "lightpink", colorName: "ライトピンク"},
+    {color: "lightgray", colorName: "ライトグレー"},
+  ],
+  dark: [
+
+  ]
+}
+
+document.querySelector("#themecolor-light")
+document.querySelector("#themecolor-light")
+
 items.forEach(item => {
   const priceDisplay = document.createElement("div");
   priceDisplay.className = "price-display";
