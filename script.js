@@ -57,8 +57,8 @@ const toExponential = (num, digits = 3) => {
 }
 
 addEventListener("click", event => {
-  if (event.target.classList.contains("item") || event.target.closest("#settings") || event.target.closest("#powerDisplay") || event.target.closest("#version")) return;
-  score = score.plus(clickPower.mul(clickMultiplier))
+  if (event.target.closest(".item-block") || event.target.closest("#settings-button") || (event.target.closest("#settings-panel") && isSettingsPanelOpen) || event.target.closest("#powerDisplay")) return;
+  score = score.plus(clickPower.mul(clickMultiplier));
 });
 
 settingsButton.addEventListener("click", () => {
