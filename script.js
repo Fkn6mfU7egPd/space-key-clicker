@@ -1,6 +1,6 @@
-const scoreElem = document.getElementById("score");
+const scoreElem = document.querySelector("#score");
 const items = Array.from(document.getElementsByClassName("item"));
-const settingsButton = document.getElementById("settings-button");
+const settingsButton = document.querySelector("#settings-button");
 const formatter = (factor, num = score) => num.div(new Decimal(factor)).toPrecision(3);
 
 let score = new Decimal(0);
@@ -21,13 +21,21 @@ let isSettingsPanelOpen = false;
 let clickPowerDirty = true;
 let autoPowerDirty = true;
 
-document.getElementById("scale-type").addEventListener("change", event => {
+document.querySelector("#color-theme").addEventListener("change", event => {
+  if(event.target.value == "auto") {
+    document.body.removeAttribute("color-theme");
+    return;
+  }
+  document.body.setAttribute("color-theme", event.target.value);
+})
+
+document.querySelector("#scale-type").addEventListener("change", event => {
   formatCfg.type = event.target.value;
   clickPowerDirty = true;
   autoPowerDirty = true;
 });
 
-document.getElementById("whitespaceBeforeSuffix").addEventListener("change", event => {
+document.querySelector("#whitespaceBeforeSuffix").addEventListener("change", event => {
   switch (event.target.value){
     case "no": formatCfg.whitespaceBeforeSuffix = false; break;
     case "yes": formatCfg.whitespaceBeforeSuffix = true; break;
@@ -36,7 +44,7 @@ document.getElementById("whitespaceBeforeSuffix").addEventListener("change", eve
   autoPowerDirty = true;
 });
 
-document.getElementById("uppercase-k").addEventListener("change", event => {
+document.querySelector("#uppercase-k").addEventListener("change", event => {
   switch (event.target.value){
     case "no": formatCfg.uppercaseK = false; break;
     case "yes": formatCfg.uppercaseK = true; break;
@@ -45,11 +53,11 @@ document.getElementById("uppercase-k").addEventListener("change", event => {
   autoPowerDirty = true;
 });
 
-document.getElementById("theme-color-light").addEventListener("change", event => {
+document.querySelector("#theme-color-light").addEventListener("change", event => {
   document.body.style.setProperty("--theme-color-light", event.target.value);
 });
 
-document.getElementById("theme-color-dark").addEventListener("change", event => {
+document.querySelector("#theme-color-dark").addEventListener("change", event => {
   document.body.style.setProperty("--theme-color-dark", event.target.value);
 });
 
@@ -68,10 +76,10 @@ addEventListener("click", event => {
 
 settingsButton.addEventListener("click", () => {
   if (isSettingsPanelOpen){
-    document.getElementById("settings-panel").style.clipPath = "inset(0 0 100% 0)";
+    document.querySelector("#settings-panel").style.clipPath = "inset(0 0 100% 0)";
     isSettingsPanelOpen = !isSettingsPanelOpen;
   }else{
-    document.getElementById("settings-panel").style.clipPath = "inset(0 0 0 0)";
+    document.querySelector("#settings-panel").style.clipPath = "inset(0 0 0 0)";
     isSettingsPanelOpen = !isSettingsPanelOpen;
   }
 });
@@ -164,6 +172,8 @@ themeColors.dark.forEach(e => {
   document.querySelector("#theme-color-dark").append(button, br);
 });
 
+
+
 items.forEach(item => {
   const priceDisplay = document.createElement("div");
   priceDisplay.className = "price-display";
@@ -229,14 +239,14 @@ function tick(){
   });
 
   if (clickPowerDirty){
-    document.getElementById("clickPowerDisplay").textContent = "クリックパワー: " +
+    document.querySelector("#clickPowerDisplay").textContent = "クリックパワー: " +
     formatNumber(clickPower.mul(clickMultiplier)) + " (" +
     formatNumber(clickPower) + " +" + formatNumber(clickMultiplier.minus(1).mul(100)) + "%)";
     clickPowerDirty = false;
   }
 
   if (autoPowerDirty){
-    document.getElementById("autoPowerDisplay").textContent = "自動: " +
+    document.querySelector("#autoPowerDisplay").textContent = "自動: " +
     formatNumber(autoPower.mul(autoMultiplier)) + " (" +
     formatNumber(autoPower) + " +" + formatNumber(autoMultiplier.minus(1).mul(100)) + "%)";
     autoPowerDirty = true;
@@ -247,7 +257,7 @@ function tick(){
 
   fps++;
   if (Date.now() - fpsPrevTime >= 1000){
-    document.getElementById("fpsDisplay").textContent = fps.toString();
+    document.querySelector("#fpsDisplay").textContent = fps.toString();
     fpsPrevTime = Date.now();
     fps = 0;
   }

@@ -32,6 +32,36 @@
   }
 }
 
+body[color-theme="light"] {
+  --background: white;
+  --text-color: black;
+  --theme-color-light: lightblue;
+  --item-border-color: black;
+  --item-hover-background: #e0e0e0;
+  --settings-theme-color-light: block;
+  --settings-theme-color-dark: none;
+  --settings-description: dimgray;
+  #settings-panel {
+    background: var(--theme-color-light);
+  }
+
+}
+
+body[color-theme="dark"]{
+  --background: #2c2c2c;
+  --text-color: silver;
+  --theme-color-dark: #2c2c80;
+  --item-border-color: silver;
+  --item-hover-background: #393939;
+  --settings-theme-color-light: none;
+  --settings-theme-color-dark: block;
+  --settings-description: #adadad;
+  #settings-panel {
+    background: var(--theme-color-dark);
+  }
+
+}
+
 body {
   background: var(--background);
   color: var(--text-color);
