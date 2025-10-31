@@ -19,6 +19,14 @@
     <div id="settings-panel" class="rounded" style="clip-path: inset(0 0 100% 0);">
       <h2>設定</h2>
       <section>
+        <h3>カラーテーマ</h3>
+        <form id="color-theme">
+          <label><input type="radio" name="dark-mode" value="light">ライト</label>
+          <label><input type="radio" name="dark-mode" value="dark">ダーク</label>
+          <label><input type="radio" name="dark-mode" value="auto" checked>デバイスの設定</label>
+        </form>
+      </section>
+      <section>
         <h3>スケール方式</h3>
         <form id="scale-type">
           <label><input type="radio" name="scale-type" value="Classic">クラシック</label>
@@ -47,9 +55,9 @@
         <div class="info">しない: 123.4k<br>する: 123.4K<br>(接尾辞の前のホワイトスペースなしで書かれています)</div>
       </section>
       <section>
-        <h3>テーマカラー (ベータ)</h3>
-        <form id="themecolor-light" class="rounded" style="background: white;"></form>
-        <form id="themecolor-dark" class="rounded" style="background: #2c2c2c; color: silver;"></form>
+        <h3>テーマ色 (ベータ)</h3>
+        <form id="theme-color-light" class="rounded" style="background: white;"></form>
+        <form id="theme-color-dark" class="rounded" style="background: #2c2c2c; color: silver;"></form>
       </section>
       <section>
         <h3>デザイン (準備中)</h3>
