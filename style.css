@@ -178,7 +178,7 @@ div.remain-display {
 #settings-panel {
   transition: clip-path 0.3s ease-out;
   max-height: calc(100vh - 210px);
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 .rounded {
