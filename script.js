@@ -250,7 +250,7 @@ function tick(){
     document.querySelector("#autoPowerDisplay").textContent = "自動: " +
     formatNumber(autoPower.mul(autoMultiplier)) + " (" +
     formatNumber(autoPower) + " +" + formatNumber(autoMultiplier.minus(1).mul(100)) + "%)";
-    autoPowerDirty = true;
+    autoPowerDirty = false;
   }
 
   scoreElem.textContent = formatNumber(score);
