@@ -141,6 +141,16 @@ div.remain-display {
   height: 32px;
 }
 
+#accurateScore {
+  font-family: serif;
+  font-size: 16px;
+  text-align: center;
+}
+
+#accurateScore:has(+#score:hover) {
+  color: red;
+}
+
 #score {
   font-weight: 400;
   font-size: 64px;
@@ -178,7 +188,7 @@ div.remain-display {
 #settings-panel {
   transition: clip-path 0.3s ease-out;
   max-height: calc(100vh - 210px);
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 .rounded {

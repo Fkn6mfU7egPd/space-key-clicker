@@ -13,9 +13,9 @@ let pressing = false;
 let fps = 0;
 let fpsPrevTime = Date.now();
 let formatCfg = {
-  type: "Standard", // Classic (Q,Qui,S,Sp...) | Standard (Qa,Qi,Sx,Sp...)
-  whitespaceBeforeSuffix: false, // false (e.g. 123.4k, 133e36) | true (e.g. 123.4 k, 133 e36) | (sample is written on standard type and lowercase k)
-  uppercaseK: false, // false (e.g. 123.4k) | true (e.g. 123.4K) | (sample is written on no whitespace before suffix)
+  type: "Standard",
+  whitespaceBeforeSuffix: false,
+  uppercaseK: false,
 };
 let isSettingsPanelOpen = false;
 let clickPowerDirty = true;
@@ -29,7 +29,7 @@ document.querySelector("#color-theme").addEventListener("change", event => {
   document.body.setAttribute("color-theme", event.target.value);
 })
 
-document.querySelector("#scale-type").addEventListener("change", event => {
+document.querySelector("#notation").addEventListener("change", event => {
   formatCfg.type = event.target.value;
   clickPowerDirty = true;
   autoPowerDirty = true;
@@ -61,10 +61,9 @@ document.querySelector("#theme-color-dark").addEventListener("change", event => 
   document.body.style.setProperty("--theme-color-dark", event.target.value);
 });
 
-// 有効数字digits桁まで切り落とす
-const toExponential = (num, digits = 3) => {
+const toEngineeringNotation = (num, digits = 3) => {
   num = num.abs();
-  if (num.equals(0)) return "0";
+  if (num.lt(1e3)) return num.toPrecision(digits);
   const mantissa = (num.mantissa * (10 ** Math.floor(num.log10() % 3)));
   return mantissa.toPrecision(digits) + (formatCfg.whitespaceBeforeSuffix ? " " : "") + (formatCfg.type === "Classic" ? "E" : "e") + Math.floor(num.log10() / 3) * 3;
 }
@@ -98,7 +97,9 @@ addEventListener("keyup", event => {
 });
 
 function formatNumber(num){
-  num = new Decimal(num);
+  const decimalNum = new Decimal(num);
+  if (formatCfg.type === "logarithm") return "e" + decimalNum.log10().toFixed(2);
+  if (formatCfg.type === "engineering") return toEngineeringNotation(decimalNum);
   const suffixes = (formatCfg.type === "Standard") ? [
     {exp: 3, suffix: (formatCfg.uppercaseK ? "K" : "k")},
     {exp: 6, suffix: "M"},
@@ -124,14 +125,14 @@ function formatNumber(num){
   ];
   suffixes.sort((a, b) => b.exp - a.exp);
 
-  if (num.exponent >= suffixes[0].exp){
-    return toExponential(num);
-  }else if (num.exponent < suffixes.at(-1).exp){
-    return formatter('1', num);
+  if (decimalNum.exponent >= suffixes[0].exp){
+    return toEngineeringNotation(decimalNum);
+  }else if (decimalNum.exponent < suffixes.at(-1).exp){
+    return formatter('1', decimalNum);
   }else{
     for (const suffix of suffixes){
-      if (num.exponent >= suffix.exp){
-        return formatter('1e' + suffix.exp, num) + (formatCfg.whitespaceBeforeSuffix ? " " : "") + suffix.suffix;
+      if (decimalNum.exponent >= suffix.exp){
+        return formatter('1e' + suffix.exp, decimalNum) + (formatCfg.whitespaceBeforeSuffix ? " " : "") + suffix.suffix;
       }
     }
   }
@@ -171,8 +172,6 @@ themeColors.dark.forEach(e => {
   button.innerHTML = `<input type="radio" name="themecolor-dark" value="${e.color}"${e.selected ? " checked" : ""}><span style="color: ${e.color};">●</span>${e.colorName}`
   document.querySelector("#theme-color-dark").append(button, br);
 });
-
-
 
 items.forEach(item => {
   const priceDisplay = document.createElement("div");

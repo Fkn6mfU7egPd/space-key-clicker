@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
+  <div id="accurateScore">Accurate score display feature is now creating, please wait for a few moments... (when hovering a main score display, this text will change color to red)</div>
   <div id="score">Loading...</div>
   <div id="powerDisplay">
     <div id="clickPowerDisplay">...</div>
@@ -27,14 +28,17 @@
         </form>
       </section>
       <section>
-        <h3>スケール方式</h3>
-        <form id="scale-type">
-          <label><input type="radio" name="scale-type" value="Classic">クラシック</label>
-          <label><input type="radio" name="scale-type" value="Standard" checked>スタンダード (デフォルト)</label>
+        <h3>記法</h3>
+        <form id="notation">
+          <label><input type="radio" name="notation" value="Classic">クラシック</label><br>
+          <label><input type="radio" name="notation" value="Standard" checked>スタンダード (デフォルト)</label><br>
+          <label><input type="radio" name="notation" value="Scientific" disabled>科学的記数法</label><br>
+          <label><input type="radio" name="notation" value="Engineering">工学的記数法</label><br>
+          <label><input type="radio" name="notation" value="logarithm">対数表記</label><br>
         </form>
       </section>
       <section>
-        <div class="info">クラシック: Q, Qui, S, Sp...<br>スタンダード: Qa, Qi, Sx, Sp...</div>
+        <div class="info">クラシック: Q, Qui, S, Sp, Engineering<br>スタンダード: Qa, Qi, Sx, Sp, Engineering<br><br>(10 000 000の表記例)<br>科学的記数法: 1e7<br>工学的記数法: 10e6<br>対数表記: e7.00</div>
         <h3>接尾辞の前のホワイトスペース</h3>
         <form id="whitespaceBeforeSuffix">
           <label>
@@ -53,6 +57,13 @@
           <label><input type="radio" name="uppercase-k" value="yes">する</label>
         </form>
         <div class="info">しない: 123.4k<br>する: 123.4K<br>(接尾辞の前のホワイトスペースなしで書かれています)</div>
+      </section>
+      <section>
+        <h3>購入可能回数の数を短縮する</h3>
+        <form id="purchase-count-format">
+          <label><input type="radio" name="purchase-count-format" value="no" checked disabled>しない (デフォルト)</label><br>
+          <label><input type="radio" name="purchase-count-format" value="yes" disabled>する</label><br>
+        </form>
       </section>
       <section>
         <h3>テーマ色 (ベータ)</h3>
