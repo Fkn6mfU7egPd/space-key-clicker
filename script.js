@@ -4,6 +4,7 @@ const settingsButton = document.querySelector("#settings-button");
 const formatter = (factor, num = score) => num.div(new Decimal(factor)).toPrecision(3);
 
 let score = new Decimal(0);
+let accurateScore = "0";
 let clickPower = new Decimal(1);
 let clickMultiplier = new Decimal(1);
 let autoPower = new Decimal(0);
@@ -72,6 +73,7 @@ const toExponential = (num, digits = 3) => {
 addEventListener("click", event => {
   if (event.target.closest(".item-block") || event.target.closest("#settings-button") || (event.target.closest("#settings-panel") && isSettingsPanelOpen) || event.target.closest("#powerDisplay")) return;
   score = score.plus(clickPower.mul(clickMultiplier));
+  accurateScore = accuAdd(accurateScore, clickPower.mul(clickMultiplier).toString());
 });
 
 settingsButton.addEventListener("click", () => {
@@ -90,6 +92,7 @@ addEventListener("keydown", event => {
     if (pressing) return;
     pressing = true;
     score = score.plus(clickPower.mul(clickMultiplier));
+    accurateScore = accuAdd(accurateScore, clickPower.mul(clickMultiplier).toString());
   }
 });
 
@@ -190,6 +193,7 @@ items.forEach(item => {
     if (score.lt(price)) return;
 
     score = score.sub(price);
+    accurateScore = accuSub(accurateScore, price.toString());
 
     item.price = price.mul(multiplier);
 
@@ -255,6 +259,8 @@ function tick(){
 
   scoreElem.textContent = formatNumber(score);
   score = score.plus(autoPower.mul(autoMultiplier).mul((Date.now() - prevTime) / 1000));
+  accurateScore = accuAdd(accurateScore, accuMul(autoPower.mul(autoMultiplier).toString(), ((Date.now() - prevTime) / 1000).toString()));
+  document.querySelector("#accurateScore").textContent = "正確なスコア: " + accurateScore;
 
   fps++;
   if (Date.now() - fpsPrevTime >= 1000){
