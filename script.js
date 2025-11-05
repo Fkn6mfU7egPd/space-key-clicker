@@ -172,8 +172,6 @@ themeColors.dark.forEach(e => {
   document.querySelector("#theme-color-dark").append(button, br);
 });
 
-
-
 items.forEach(item => {
   const priceDisplay = document.createElement("div");
   priceDisplay.className = "price-display";
