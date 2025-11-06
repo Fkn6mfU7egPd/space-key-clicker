@@ -204,6 +204,7 @@ items.forEach(item => {
         const type = item.dataset.type;
         if (type === "decrease") {
           items.forEach(target => {
+            if (target === item) return;
             target.price = target.price.div(new Decimal(target.multiplier).pow(item.dataset.amount))
           });
         }
