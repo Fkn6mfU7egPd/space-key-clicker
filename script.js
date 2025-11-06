@@ -200,6 +200,14 @@ items.forEach(item => {
       case "am": autoMultiplier = autoMultiplier.plus(amount); autoPowerDirty = true; break;
       case "mcp": clickPower = clickPower.mul(amount); clickPowerDirty = true; break;
       case "map": autoPower = autoPower.mul(amount); autoPowerDirty = true; break;
+      case "special":
+        const type = item.dataset.type;
+        if (type === "decrease") {
+          items.forEach(target => {
+            target.price = target.price.div(new Decimal(target.multiplier).pow(item.dataset.amount))
+          });
+        }
+        break;
       default: console.warn("Unknown action:", action);
     }
   });
