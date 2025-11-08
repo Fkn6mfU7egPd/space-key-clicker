@@ -96,6 +96,38 @@ addEventListener("keyup", event => {
   if (event.key === " ") pressing = false;
 });
 
+function generateExtendedSuffixes(){
+  const suffixes = [];
+  const a = ["", "U", "D", "T", "Qa", "Qi", "Sx", "Sp", "O", "N"];
+  const b = ["", "Dc", "Vg", "Tg", "Qd", "Qi", "Se", "St", "Og", "Nn"];
+  b.forEach((bSuffix, bIndex) => {
+    a.forEach((aSuffix, aIndex) => {
+      const exp = bIndex * 30 + aIndex * 3;
+      if (bSuffix === ""){
+        suffixes.push({exp, suffix: [
+          "",
+          formatCfg.uppercaseK ? "K" : "k",
+          "M",
+          "B",
+          "T",
+          "Qa",
+          "Qi",
+          "Sx",
+          "Sp",
+          "Oc",
+          "No"
+        ][aIndex]});
+      }else{
+        suffixes.push({exp, suffix: aSuffix + bSuffix});
+      }
+    });
+  });
+  suffixes.push({exp: b.length * 30});
+  return suffixes;
+}
+
+const extendedSuffixes = generateExtendedSuffixes();
+
 function formatNumber(num){
   const decimalNum = new Decimal(num);
   if (formatCfg.type === "logarithm") return "e" + decimalNum.log10().toFixed(2);
@@ -121,7 +153,7 @@ function formatNumber(num){
     {exp: 21, suffix: "S"},
     {exp: 24, suffix: "Sp"},
     {exp: 27}
-  ] : [
+  ] : (formatCfg.type === "Extended") ? extendedSuffixes : [
     {exp: 0}
   ];
   suffixes.sort((a, b) => b.exp - a.exp);
