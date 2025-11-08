@@ -100,6 +100,7 @@ function formatNumber(num){
   const decimalNum = new Decimal(num);
   if (formatCfg.type === "logarithm") return "e" + decimalNum.log10().toFixed(2);
   if (formatCfg.type === "engineering") return toEngineeringNotation(decimalNum);
+  if (formatCfg.type === "Scientific") return decimalNum.toExponential(2);
   const suffixes = (formatCfg.type === "Standard") ? [
     {exp: 3, suffix: (formatCfg.uppercaseK ? "K" : "k")},
     {exp: 6, suffix: "M"},
