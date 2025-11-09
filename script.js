@@ -10,6 +10,7 @@ let autoPower = new Decimal(0);
 let autoMultiplier = new Decimal(1);
 let prevTime = Date.now();
 let pressing = false;
+let purchase_amount = 1;
 let fps = 0;
 let fpsPrevTime = Date.now();
 let formatCfg = {
@@ -70,8 +71,16 @@ const toExponential = (num, digits = 3) => {
 }
 
 addEventListener("click", event => {
-  if (event.target.closest(".item-block") || event.target.closest("#settings-button") || (event.target.closest("#settings-panel") && isSettingsPanelOpen) || event.target.closest("#powerDisplay")) return;
+  if (event.target.closest(".item-block") || event.target.closest("#settings-button") || (event.target.closest("#settings-panel") && isSettingsPanelOpen) || event.target.closest("#powerDisplay") || event.target.closest("#purchase-amount-wrapper")) return;
   score = score.plus(clickPower.mul(clickMultiplier));
+});
+
+document.querySelectorAll(".purchase-amount-selector").forEach(elem => {
+  elem.addEventListener("click", () => {
+    document.querySelector(".purchase-amount-selector.selected")?.classList?.remove?.("selected");
+    elem.classList.add("selected");
+    purchase_amount = elem.dataset.amount === "max" ? "max" : parseInt(elem.dataset.amount);
+  });
 });
 
 settingsButton.addEventListener("click", () => {
@@ -172,8 +181,6 @@ themeColors.dark.forEach(e => {
   document.querySelector("#theme-color-dark").append(button, br);
 });
 
-
-
 items.forEach(item => {
   const priceDisplay = document.createElement("div");
   priceDisplay.className = "price-display";
@@ -185,22 +192,38 @@ items.forEach(item => {
 
   item.addEventListener('click', () => {
     const {price, multiplier, amount} = item;
+    const price_multiplied = purchase_amount === "max" ?
+      price.mul(multiplier ** maxPurchasesFormula(price, multiplier, score) - 1).div(multiplier - 1) :
+      price.mul(multiplier ** purchase_amount - 1).div(multiplier - 1);
     const action = item.dataset.action;
 
-    if (score.lt(price)) return;
+    if (score.lt(price_multiplied)) return;
 
-    score = score.sub(price);
+    score = score.sub(price_multiplied);
 
-    item.price = price.mul(multiplier);
+    item.price = purchase_amount === "max" ?
+      price.mul(multiplier ** maxPurchasesFormula(price, multiplier, score)) :
+      price.mul(multiplier ** purchase_amount);
 
-    switch(action) {
-      case "cp": clickPower = clickPower.plus(amount); clickPowerDirty = true; break;
-      case "cm": clickMultiplier = clickMultiplier.plus(amount); clickPowerDirty = true; break;
-      case "ap": autoPower = autoPower.plus(amount); autoPowerDirty = true; break;
-      case "am": autoMultiplier = autoMultiplier.plus(amount); autoPowerDirty = true; break;
-      case "mcp": clickPower = clickPower.mul(amount); clickPowerDirty = true; break;
-      case "map": autoPower = autoPower.mul(amount); autoPowerDirty = true; break;
-      default: console.warn("Unknown action:", action);
+    for(let i = 0; i < (purchase_amount === "max" ? maxPurchasesFormula(price, multiplier, score) : purchase_amount); i++){
+      switch(action) {
+        case "cp": clickPower = clickPower.plus(amount); clickPowerDirty = true; break;
+        case "cm": clickMultiplier = clickMultiplier.plus(amount); clickPowerDirty = true; break;
+        case "ap": autoPower = autoPower.plus(amount); autoPowerDirty = true; break;
+        case "am": autoMultiplier = autoMultiplier.plus(amount); autoPowerDirty = true; break;
+        case "mcp": clickPower = clickPower.mul(amount); clickPowerDirty = true; break;
+        case "map": autoPower = autoPower.mul(amount); autoPowerDirty = true; break;
+        case "special":
+          const type = item.dataset.type;
+          if (type === "decrease") {
+            items.forEach(target => {
+              if (target === item) return;
+              target.price = target.price.div(new Decimal(target.multiplier).pow(item.dataset.amount))
+            });
+          }
+          break;
+        default: console.warn("Unknown action:", action);
+      }
     }
   });
 
@@ -224,9 +247,12 @@ function maxPurchasesFormula(a, x, y){ // 初期価格、倍率、所持金
 function tick(){
   items.forEach(item => {
     const {price, multiplier, priceDisplay, remainDisplay} = item;
-    priceDisplay.textContent = "値段: " + formatNumber(price);
-    const remain = price.minus(score);
-    if (score.lt(price)){
+    const price_multiplied = purchase_amount === "max" ?
+      price.mul(new Decimal(multiplier).pow(maxPurchasesFormula(price, multiplier, score)).minus(1)).div(multiplier - 1) :
+      price.mul(new Decimal(multiplier).pow(purchase_amount).minus(1)).div(multiplier - 1);
+    priceDisplay.textContent = "値段: " + formatNumber(price_multiplied);
+    const remain = price_multiplied.minus(score);
+    if (score.lt(price_multiplied)){
       remainDisplay.textContent = "あと" + formatNumber(remain) + "スコア\n";
       remainDisplay.textContent += "(" + formatNumber(remain.div(clickPower.mul(clickMultiplier))) + "クリック";
       if (autoPower.eq(0)){
@@ -235,7 +261,11 @@ function tick(){
         remainDisplay.textContent += " / " + formatNumber(remain.div(autoPower.mul(autoMultiplier))) + "秒)";
       };
     }else{
-      remainDisplay.textContent = maxPurchasesFormula(price, multiplier, score).toString() + "個購入可能";
+      if (purchase_amount === "max") {
+        remainDisplay.textContent = maxPurchasesFormula(price, multiplier, score).toString() + "個購入可能";
+      }else{
+        remainDisplay.textContent = (maxPurchasesFormula(price, multiplier, score) / purchase_amount).toString() + "回購入可能";
+      }
     }
   });
 

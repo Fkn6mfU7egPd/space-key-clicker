@@ -13,6 +13,15 @@
     <div id="clickPowerDisplay">...</div>
     <div id="autoPowerDisplay">...</div>
   </div>
+  <div id="purchase-amount-wrapper">
+    <div class="purchase-amount-selector selected" data-amount="1">1個購入</div>
+    <div class="purchase-amount-selector" data-amount="5">5個購入</div>
+    <div class="purchase-amount-selector" data-amount="10">10個購入</div>
+    <div class="purchase-amount-selector" data-amount="20">20個購入</div>
+    <div class="purchase-amount-selector" data-amount="50">50個購入</div>
+    <div class="purchase-amount-selector" data-amount="100">100個購入</div>
+    <div class="purchase-amount-selector" data-amount="max">最大購入</div>
+  </div>
   <div id="fps"><span id="fpsDisplay">...</span>fps</div>
   <div id="settings">
     <div id="settings-button" class="material-symbols-rounded">settings</div>
@@ -84,7 +93,7 @@
       </div>
 
       <div class="item-block">
-        <div class="item" data-price="1e3" data-multiplier="3.6" data-action="mcp" data-amount="2">手動<br>×2</div>
+        <div class="item" data-price="1e3" data-multiplier="4.3" data-action="mcp" data-amount="2">手動<br>×2</div>
       </div>
 
       <div class="item-block">
@@ -92,20 +101,28 @@
       </div>
 
       <div class="item-block">
-        <div class="item" data-price="100e3" data-multiplier="8.5" data-action="mcp" data-amount="3">手動<br>×3</div>
+        <div class="item" data-price="100e3" data-multiplier="10" data-action="mcp" data-amount="3">手動<br>×3</div>
       </div>
 
       <div class="item-block">
-        <div class="item" data-price="20e9" data-multiplier="2.6" data-action="cm" data-amount="80">手動<br>+80%</div>
+        <div class="item" data-price="20e9" data-multiplier="2.6" data-action="cm" data-amount="0.8">手動<br>+80%</div>
+      </div>
+
+      <div class="item-block">
+        <div class="item" data-price="800e15" data-multiplier="17" data-action="mcp" data-amount="5">手動<br>×5</div>
+      </div>
+
+      <div class="item-block">
+        <div class="item" data-price="50e21" data-multiplier="39" data-action="mcp" data-amount="10">手動<br>×10</div>
       </div>
     </div>
-    <!--
+
     <div class="item-group">
       <div class="item-block">
-        <div class="item" data-price="999e99999" data-multiplier="999E99999">アイテム<br>値段減少</div>
+        <div class="item" data-price="20e3" data-multiplier="600" data-action="special" data-type="decrease" data-amount="2">アイテム<br>値段減少</div>
       </div>
     </div>
-    -->
+
     <div class="item-group">
       <div class="item-block">
         <div class="item" data-price="100" data-multiplier="1.1" data-action="ap" data-amount="1">自動<br>+1</div>
@@ -120,7 +137,7 @@
       </div>
 
       <div class="item-block">
-        <div class="item" data-price="3e3" data-multiplier="3.6" data-action="map" data-amount="2">自動<br>×2</div>
+        <div class="item" data-price="3e3" data-multiplier="4.3" data-action="map" data-amount="2">自動<br>×2</div>
       </div>
 
       <div class="item-block">
@@ -128,11 +145,19 @@
       </div>
 
       <div class="item-block">
-        <div class="item" data-price="300e3" data-multiplier="8.5" data-action="map" data-amount="3">自動<br>×3</div>
+        <div class="item" data-price="300e3" data-multiplier="10" data-action="map" data-amount="3">自動<br>×3</div>
       </div>
 
       <div class="item-block">
         <div class="item" data-price="60e9" data-multiplier="2.6" data-action="am" data-amount="0.8">自動<br>+80%</div>
+      </div>
+
+      <div class="item-block">
+        <div class="item" data-price="20e18" data-multiplier="17" data-action="map" data-amount="5">自動<br>×5</div>
+      </div>
+
+      <div class="item-block">
+        <div class="item" data-price="400e21" data-multiplier="39" data-action="map" data-amount="10">自動<br>×10</div>
       </div>
     </div>
   </div>

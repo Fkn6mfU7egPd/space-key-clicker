@@ -14,6 +14,9 @@
   #settings-panel {
     background: var(--theme-color-light);
   }
+  div.purchase-amount-selector.selected {
+    background: var(--theme-color-light);
+  }
 }
 
 @media (prefers-color-scheme: dark){
@@ -30,6 +33,9 @@
   #settings-panel {
     background: var(--theme-color-dark);
   }
+  div.purchase-amount-selector.selected {
+    background: var(--theme-color-dark);
+  }
 }
 
 body[color-theme="light"] {
@@ -44,7 +50,9 @@ body[color-theme="light"] {
   #settings-panel {
     background: var(--theme-color-light);
   }
-
+  div.purchase-amount-selector.selected {
+    background: var(--theme-color-light);
+  }
 }
 
 body[color-theme="dark"]{
@@ -59,7 +67,9 @@ body[color-theme="dark"]{
   #settings-panel {
     background: var(--theme-color-dark);
   }
-
+  div.purchase-amount-selector.selected {
+    background: var(--theme-color-dark);
+  }
 }
 
 body {
@@ -67,6 +77,7 @@ body {
   color: var(--text-color);
   --opacity: 80%;
   --accent-color: color-mix(in srgb, color-mix(in srgb, var(--background) var(--opacity), transparent) var(--opacity), black);
+  user-select: none;
 }
 
 div.item {
@@ -117,10 +128,6 @@ div.item-group {
   flex-direction: column;
 }
 
-div.item-block {
-  user-select: none;
-}
-
 div.item {
   border: 3px solid;
   border-radius: 20px;
@@ -137,7 +144,14 @@ div.item {
   transition: background 0.1s linear;
 }
 
-div.price-display {
+div#purchase-amount-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+div.price-display, div.purchase-amount-selector {
   background: var(--accent-color);
   width: max-content;
   padding: 4px 6px;
@@ -156,7 +170,6 @@ div.remain-display {
   font-size: 64px;
   font-family: "Inconsolata", monospace;
   text-align: center;
-  user-select: none;
   position: sticky;
   width: 100%;
   top: 0px;
@@ -172,7 +185,6 @@ div.remain-display {
   align-items: end;
   display: flex;
   flex-direction: column;
-  user-select: none;
 }
 
 #settings-panel {
@@ -208,7 +220,6 @@ div.remain-display {
   font-family: "Inconsolata", monospace;
   padding: 6px;
   border-radius: 8px;
-  user-select: none;
   background: var(--accent-color);
 }
 
