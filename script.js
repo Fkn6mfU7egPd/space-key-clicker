@@ -130,7 +130,7 @@ const extendedSuffixes = generateExtendedSuffixes();
 
 function formatNumber(num){
   const decimalNum = new Decimal(num);
-  if (formatCfg.type === "logarithm") return "e" + decimalNum.log10().toFixed(2);
+  if (formatCfg.type === "logarithm") return decimalNum.equals(0) ? "0.00" : "e" + decimalNum.log10().toFixed(2);
   if (formatCfg.type === "engineering") return toEngineeringNotation(decimalNum);
   if (formatCfg.type === "Scientific") return decimalNum.toExponential(2);
   const suffixes = (formatCfg.type === "Standard") ? [
