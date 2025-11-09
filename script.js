@@ -66,8 +66,10 @@ document.querySelector("#theme-color-dark").addEventListener("change", event => 
 const toExponential = (num, digits = 3) => {
   num = num.abs();
   if (num.equals(0)) return "0";
-  const mantissa = (num.mantissa * (10 ** Math.floor(num.log10() % 3)));
-  return mantissa.toPrecision(digits) + (formatCfg.whitespaceBeforeSuffix ? " " : "") + (formatCfg.type === "Classic" ? "E" : "e") + Math.floor(num.log10() / 3) * 3;
+  const exponent = num.log(10) * (10 ** Math.floor(num.log(10) % 3));
+  const ten = new Decimal(10);
+  const mantissa = num.div(ten.pow(exponent));
+  return mantissa.toPrecision(digits) + (formatCfg.whitespaceBeforeSuffix ? " " : "") + (formatCfg.type === "Classic" ? "E" : "e") + exponent;
 }
 
 addEventListener("click", event => {
@@ -133,13 +135,13 @@ function formatNumber(num){
   ];
   suffixes.sort((a, b) => b.exp - a.exp);
 
-  if (num.exponent >= suffixes[0].exp){
+  if (num.e >= suffixes[0].exp){
     return toExponential(num);
-  }else if (num.exponent < suffixes.at(-1).exp){
+  }else if (num.e < suffixes.at(-1).exp){
     return formatter('1', num);
   }else{
     for (const suffix of suffixes){
-      if (num.exponent >= suffix.exp){
+      if (num.e >= suffix.exp){
         return formatter('1e' + suffix.exp, num) + (formatCfg.whitespaceBeforeSuffix ? " " : "") + suffix.suffix;
       }
     }
