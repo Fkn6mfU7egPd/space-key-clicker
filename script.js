@@ -248,8 +248,8 @@ function tick(){
   items.forEach(item => {
     const {price, multiplier, priceDisplay, remainDisplay} = item;
     const price_multiplied = purchase_amount === "max" ?
-      price.mul(multiplier ** maxPurchasesFormula(price, multiplier, score) - 1).div(multiplier - 1) :
-      price.mul(multiplier ** purchase_amount - 1).div(multiplier - 1);
+      price.mul(new Decimal(multiplier).pow(maxPurchasesFormula(price, multiplier, score)).minus(1)).div(multiplier - 1) :
+      price.mul(new Decimal(multiplier).pow(purchase_amount).minus(1)).div(multiplier - 1);
     priceDisplay.textContent = "値段: " + formatNumber(price_multiplied);
     const remain = price_multiplied.minus(score);
     if (score.lt(price_multiplied)){
