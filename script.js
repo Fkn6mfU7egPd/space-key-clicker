@@ -4,7 +4,6 @@ const settingsButton = document.querySelector("#settings-button");
 const formatter = (factor, num = score) => num.div(new Decimal(factor)).toPrecision(3);
 
 let score = new Decimal(0);
-let accurateScore = "0";
 let clickPower = new Decimal(1);
 let clickMultiplier = new Decimal(1);
 let autoPower = new Decimal(0);
@@ -66,14 +65,15 @@ document.querySelector("#theme-color-dark").addEventListener("change", event => 
 const toExponential = (num, digits = 3) => {
   num = num.abs();
   if (num.equals(0)) return "0";
-  const mantissa = (num.mantissa * (10 ** Math.floor(num.log10() % 3)));
-  return mantissa.toPrecision(digits) + (formatCfg.whitespaceBeforeSuffix ? " " : "") + (formatCfg.type === "Classic" ? "E" : "e") + Math.floor(num.log10() / 3) * 3;
+  const exponent = num.log(10) * (10 ** Math.floor(num.log(10) % 3));
+  const ten = new Decimal(10);
+  const mantissa = num.div(ten.pow(exponent));
+  return mantissa.toPrecision(digits) + (formatCfg.whitespaceBeforeSuffix ? " " : "") + (formatCfg.type === "Classic" ? "E" : "e") + exponent;
 }
 
 addEventListener("click", event => {
   if (event.target.closest(".item-block") || event.target.closest("#settings-button") || (event.target.closest("#settings-panel") && isSettingsPanelOpen) || event.target.closest("#powerDisplay")) return;
   score = score.plus(clickPower.mul(clickMultiplier));
-  accurateScore = accuAdd(accurateScore, clickPower.mul(clickMultiplier).toString());
 });
 
 settingsButton.addEventListener("click", () => {
@@ -92,7 +92,6 @@ addEventListener("keydown", event => {
     if (pressing) return;
     pressing = true;
     score = score.plus(clickPower.mul(clickMultiplier));
-    accurateScore = accuAdd(accurateScore, clickPower.mul(clickMultiplier).toString());
   }
 });
 
@@ -127,13 +126,13 @@ function formatNumber(num){
   ];
   suffixes.sort((a, b) => b.exp - a.exp);
 
-  if (num.exponent >= suffixes[0].exp){
+  if (num.e >= suffixes[0].exp){
     return toExponential(num);
-  }else if (num.exponent < suffixes.at(-1).exp){
+  }else if (num.e < suffixes.at(-1).exp){
     return formatter('1', num);
   }else{
     for (const suffix of suffixes){
-      if (num.exponent >= suffix.exp){
+      if (num.e >= suffix.exp){
         return formatter('1e' + suffix.exp, num) + (formatCfg.whitespaceBeforeSuffix ? " " : "") + suffix.suffix;
       }
     }
@@ -193,7 +192,6 @@ items.forEach(item => {
     if (score.lt(price)) return;
 
     score = score.sub(price);
-    accurateScore = accuSub(accurateScore, price.toString());
 
     item.price = price.mul(multiplier);
 
@@ -259,8 +257,6 @@ function tick(){
 
   scoreElem.textContent = formatNumber(score);
   score = score.plus(autoPower.mul(autoMultiplier).mul((Date.now() - prevTime) / 1000));
-  accurateScore = accuAdd(accurateScore, accuMul(autoPower.mul(autoMultiplier).toString(), ((Date.now() - prevTime) / 1000).toString()));
-  document.querySelector("#accurateScore").textContent = "正確なスコア: " + accurateScore;
 
   fps++;
   if (Date.now() - fpsPrevTime >= 1000){
