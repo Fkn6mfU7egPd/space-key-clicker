@@ -14,6 +14,9 @@
   #settings-panel {
     background: var(--theme-color-light);
   }
+  div.purchase-amount-selector.selected {
+    background: var(--theme-color-light);
+  }
 }
 
 @media (prefers-color-scheme: dark){
@@ -30,6 +33,9 @@
   #settings-panel {
     background: var(--theme-color-dark);
   }
+  div.purchase-amount-selector.selected {
+    background: var(--theme-color-dark);
+  }
 }
 
 body[color-theme="light"] {
@@ -44,7 +50,9 @@ body[color-theme="light"] {
   #settings-panel {
     background: var(--theme-color-light);
   }
-
+  div.purchase-amount-selector.selected {
+    background: var(--theme-color-light);
+  }
 }
 
 body[color-theme="dark"]{
@@ -59,7 +67,9 @@ body[color-theme="dark"]{
   #settings-panel {
     background: var(--theme-color-dark);
   }
-
+  div.purchase-amount-selector.selected {
+    background: var(--theme-color-dark);
+  }
 }
 
 body {
@@ -134,7 +144,14 @@ div.item {
   transition: background 0.1s linear;
 }
 
-div.price-display {
+div#purchase-amount-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+div.price-display, div.purchase-amount-selector {
   background: var(--accent-color);
   width: max-content;
   padding: 4px 6px;
