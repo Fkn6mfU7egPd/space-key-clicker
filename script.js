@@ -65,7 +65,7 @@ document.querySelector("#theme-color-dark").addEventListener("change", event => 
 const toExponential = (num, digits = 3) => {
   num = num.abs();
   if (num.equals(0)) return "0";
-  const exponent = num.log(10) * (10 ** Math.floor(num.log(10) % 3));
+  const exponent = Math.floor(num.log(10) / 3) * 3;
   const ten = new Decimal(10);
   const mantissa = num.div(ten.pow(exponent));
   return mantissa.toPrecision(digits) + (formatCfg.whitespaceBeforeSuffix ? " " : "") + (formatCfg.type === "Classic" ? "E" : "e") + exponent;
