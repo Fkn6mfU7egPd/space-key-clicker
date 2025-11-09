@@ -264,7 +264,7 @@ function tick(){
       if (purchase_amount === "max") {
         remainDisplay.textContent = maxPurchasesFormula(price, multiplier, score).toString() + "個購入可能";
       }else{
-        remainDisplay.textContent = (maxPurchasesFormula(price, multiplier, score) / purchase_amount).toString() + "回購入可能";
+        remainDisplay.textContent = Math.floor(maxPurchasesFormula(price, multiplier, score) / purchase_amount).toString() + "回購入可能";
       }
     }
   });
