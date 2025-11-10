@@ -1,7 +1,7 @@
 const scoreElem = document.querySelector("#score");
 const items = Array.from(document.getElementsByClassName("item"));
 const settingsButton = document.querySelector("#settings-button");
-const formatter = (factor, num = score) => num.div(new Decimal(factor)).toPrecision(3);
+const formatter = (factor, num) => num.div(new Decimal(factor)).toPrecision(3);
 
 let score = new Decimal(0);
 let clickPower = new Decimal(1);
@@ -73,7 +73,7 @@ const toExponential = (num, digits = 3) => {
 }
 
 addEventListener("click", event => {
-  if (event.target.closest(".item-block") || event.target.closest("#settings-button") || (event.target.closest("#settings-panel") && isSettingsPanelOpen) || event.target.closest("#powerDisplay") || event.target.closest("#purchase-amount-wrapper")) return;
+  if (event.target.closest(".item-block") || event.target.closest("#settings-button") || (event.target.closest("#settings-panel") && isSettingsPanelOpen) || event.target.closest("#powerDisplay") || event.target.closest(".purchase-amount-selector")) return;
   score = score.plus(clickPower.mul(clickMultiplier));
 });
 
@@ -90,8 +90,15 @@ settingsButton.addEventListener("click", () => {
     document.querySelector("#settings-panel").style.clipPath = "inset(0 0 100% 0)";
     isSettingsPanelOpen = !isSettingsPanelOpen;
   }else{
+    document.querySelector("#purchase-amount-wrapper").style.zIndex = "auto";
     document.querySelector("#settings-panel").style.clipPath = "inset(0 0 0 0)";
     isSettingsPanelOpen = !isSettingsPanelOpen;
+  }
+});
+
+document.querySelector("#settings-panel").addEventListener("transitionend", () => {
+  if (!isSettingsPanelOpen){
+    document.querySelector("#purchase-amount-wrapper").style.zIndex = "1";
   }
 });
 
@@ -194,9 +201,7 @@ items.forEach(item => {
 
   item.addEventListener('click', () => {
     const {price, multiplier, amount} = item;
-    const price_multiplied = purchase_amount === "max" ?
-      price.mul(multiplier ** maxPurchasesFormula(price, multiplier, score) - 1).div(multiplier - 1) :
-      price.mul(multiplier ** purchase_amount - 1).div(multiplier - 1);
+    const price_multiplied = purchase_amount === 1 ? price : (purchase_amount === "max" ? price.mul(new Decimal(multiplier).pow(maxPurchasesFormula(price, multiplier, score)).minus(1)).div(multiplier - 1) : price.mul(new Decimal(multiplier).pow(purchase_amount).minus(1)).div(multiplier - 1));
     const action = item.dataset.action;
 
     if (score.lt(price_multiplied)) return;
@@ -249,9 +254,7 @@ function maxPurchasesFormula(a, x, y){ // 初期価格、倍率、所持金
 function tick(){
   items.forEach(item => {
     const {price, multiplier, priceDisplay, remainDisplay} = item;
-    const price_multiplied = purchase_amount === "max" ?
-      price.mul(new Decimal(multiplier).pow(maxPurchasesFormula(price, multiplier, score)).minus(1)).div(multiplier - 1) :
-      price.mul(new Decimal(multiplier).pow(purchase_amount).minus(1)).div(multiplier - 1);
+    const price_multiplied = purchase_amount === 1 ? price : (purchase_amount === "max" ? price.mul(new Decimal(multiplier).pow(maxPurchasesFormula(price, multiplier, score)).minus(1)).div(multiplier - 1) : price.mul(new Decimal(multiplier).pow(purchase_amount).minus(1)).div(multiplier - 1));
     priceDisplay.textContent = "値段: " + formatNumber(price_multiplied);
     const remain = price_multiplied.minus(score);
     if (score.lt(price_multiplied)){
