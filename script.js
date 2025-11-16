@@ -1,7 +1,7 @@
 const scoreElem = document.querySelector("#score");
 const items = Array.from(document.getElementsByClassName("item"));
 const settingsButton = document.querySelector("#settings-button");
-const formatter = (factor, num = score) => num.div(new Decimal(factor)).toPrecision(3);
+const formatter = (factor, num) => num.div(new Decimal(factor)).toPrecision(3);
 
 let score = new Decimal(0);
 let clickPower = new Decimal(1);
@@ -66,12 +66,14 @@ document.querySelector("#theme-color-dark").addEventListener("change", event => 
 const toExponential = (num, digits = 3) => {
   num = num.abs();
   if (num.equals(0)) return "0";
-  const mantissa = (num.mantissa * (10 ** Math.floor(num.log10() % 3)));
-  return mantissa.toPrecision(digits) + (formatCfg.whitespaceBeforeSuffix ? " " : "") + (formatCfg.type === "Classic" ? "E" : "e") + Math.floor(num.log10() / 3) * 3;
+  const exponent = Math.floor(num.log(10) / 3) * 3;
+  const ten = new Decimal(10);
+  const mantissa = num.div(ten.pow(exponent));
+  return mantissa.toPrecision(digits) + (formatCfg.whitespaceBeforeSuffix ? " " : "") + (formatCfg.type === "Classic" ? "E" : "e") + exponent;
 }
 
 addEventListener("click", event => {
-  if (event.target.closest(".item-block") || event.target.closest("#settings-button") || (event.target.closest("#settings-panel") && isSettingsPanelOpen) || event.target.closest("#powerDisplay") || event.target.closest("#purchase-amount-wrapper")) return;
+  if (event.target.closest(".item-block") || event.target.closest("#settings-button") || (event.target.closest("#settings-panel") && isSettingsPanelOpen) || event.target.closest("#powerDisplay") || event.target.closest(".purchase-amount-selector")) return;
   score = score.plus(clickPower.mul(clickMultiplier));
 });
 
@@ -88,8 +90,15 @@ settingsButton.addEventListener("click", () => {
     document.querySelector("#settings-panel").style.clipPath = "inset(0 0 100% 0)";
     isSettingsPanelOpen = !isSettingsPanelOpen;
   }else{
+    document.querySelector("#purchase-amount-wrapper").style.zIndex = "auto";
     document.querySelector("#settings-panel").style.clipPath = "inset(0 0 0 0)";
     isSettingsPanelOpen = !isSettingsPanelOpen;
+  }
+});
+
+document.querySelector("#settings-panel").addEventListener("transitionend", () => {
+  if (!isSettingsPanelOpen){
+    document.querySelector("#purchase-amount-wrapper").style.zIndex = "1";
   }
 });
 
@@ -133,13 +142,13 @@ function formatNumber(num){
   ];
   suffixes.sort((a, b) => b.exp - a.exp);
 
-  if (num.exponent >= suffixes[0].exp){
+  if (num.e >= suffixes[0].exp){
     return toExponential(num);
-  }else if (num.exponent < suffixes.at(-1).exp){
+  }else if (num.e < suffixes.at(-1).exp){
     return formatter('1', num);
   }else{
     for (const suffix of suffixes){
-      if (num.exponent >= suffix.exp){
+      if (num.e >= suffix.exp){
         return formatter('1e' + suffix.exp, num) + (formatCfg.whitespaceBeforeSuffix ? " " : "") + suffix.suffix;
       }
     }
@@ -192,9 +201,7 @@ items.forEach(item => {
 
   item.addEventListener('click', () => {
     const {price, multiplier, amount} = item;
-    const price_multiplied = purchase_amount === "max" ?
-      price.mul(multiplier ** maxPurchasesFormula(price, multiplier, score) - 1).div(multiplier - 1) :
-      price.mul(multiplier ** purchase_amount - 1).div(multiplier - 1);
+    const price_multiplied = purchase_amount === 1 ? price : (purchase_amount === "max" ? price.mul(new Decimal(multiplier).pow(maxPurchasesFormula(price, multiplier, score)).minus(1)).div(multiplier - 1) : price.mul(new Decimal(multiplier).pow(purchase_amount).minus(1)).div(multiplier - 1));
     const action = item.dataset.action;
 
     if (score.lt(price_multiplied)) return;
@@ -247,9 +254,7 @@ function maxPurchasesFormula(a, x, y){ // 初期価格、倍率、所持金
 function tick(){
   items.forEach(item => {
     const {price, multiplier, priceDisplay, remainDisplay} = item;
-    const price_multiplied = purchase_amount === "max" ?
-      price.mul(new Decimal(multiplier).pow(maxPurchasesFormula(price, multiplier, score)).minus(1)).div(multiplier - 1) :
-      price.mul(new Decimal(multiplier).pow(purchase_amount).minus(1)).div(multiplier - 1);
+    const price_multiplied = purchase_amount === 1 ? price : (purchase_amount === "max" ? price.mul(new Decimal(multiplier).pow(maxPurchasesFormula(price, multiplier, score)).minus(1)).div(multiplier - 1) : price.mul(new Decimal(multiplier).pow(purchase_amount).minus(1)).div(multiplier - 1));
     priceDisplay.textContent = "値段: " + formatNumber(price_multiplied);
     const remain = price_multiplied.minus(score);
     if (score.lt(price_multiplied)){
@@ -264,7 +269,7 @@ function tick(){
       if (purchase_amount === "max") {
         remainDisplay.textContent = maxPurchasesFormula(price, multiplier, score).toString() + "個購入可能";
       }else{
-        remainDisplay.textContent = (maxPurchasesFormula(price, multiplier, score) / purchase_amount).toString() + "回購入可能";
+        remainDisplay.textContent = Math.floor(maxPurchasesFormula(price, multiplier, score) / purchase_amount).toString() + "回購入可能";
       }
     }
   });
