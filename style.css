@@ -150,6 +150,7 @@ div#purchase-amount-wrapper {
   z-index: 1;
   position: sticky;
   top: calc(64px * var(--ui-size));
+  backdrop-filter: blur(2px);
 }
 
 div.purchase-amount-selector {
@@ -180,6 +181,7 @@ div.remain-display {
   width: 100%;
   top: 0px;
   margin-top: calc(40px * var(--ui-size));
+  backdrop-filter: blur(2px);
 }
 
 #settings {
