@@ -62,6 +62,14 @@ document.querySelector("#theme-color-dark").addEventListener("change", event => 
   document.body.style.setProperty("--theme-color-dark", event.target.value);
 });
 
+document.querySelector("#ui-size").addEventListener("change", event => {
+  document.body.style.setProperty("--ui-size", parseFloat(event.target.value));
+});
+
+document.querySelector("#ui-size").addEventListener("input", event => {
+  document.getElementById("ui-size-display").textContent = Math.round(event.target.value * 100);
+});
+
 // 有効数字digits桁まで切り落とす
 const toExponential = (num, digits = 3) => {
   num = num.abs();

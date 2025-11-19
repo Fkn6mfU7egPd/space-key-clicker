@@ -38,6 +38,12 @@
   }
 }
 
+@supports (width: -webkit-fill-available) {
+  #ui-size {
+    width: -webkit-fill-available !important;
+  }
+}
+
 body[color-theme="light"] {
   --background: white;
   --text-color: black;
@@ -78,6 +84,7 @@ body {
   --opacity: 80%;
   --accent-color: color-mix(in srgb, color-mix(in srgb, var(--background) var(--opacity), transparent) var(--opacity), black);
   user-select: none;
+  --ui-size: 1;
 }
 
 div.item {
@@ -99,27 +106,18 @@ form#theme-color-dark {
   color: var(--settings-description)
 }
 
-#version {
-  font-size: 12px;
-  font-family: "Inconsolata", monospace;
-  position: fixed;
-  left: 0;
-  top: 0;
-  padding: 4px;
-  background: white;
-}
-
 #powerDisplay {
   width: 100%;
   text-align: center;
-  margin-top: 24px;
-  margin-bottom: 24px;
+  margin-top: calc(24px * var(--ui-size));
+  margin-bottom: calc(24px * var(--ui-size));
+  font-size: calc(16px * var(--ui-size))
 }
 
 #item-wrapper {
   display: flex;
   flex-direction: row;
-  gap: 16px;
+  gap: calc(16px * var(--ui-size));
   justify-content: center;
 }
 
@@ -129,18 +127,18 @@ div.item-group {
 }
 
 div.item {
-  border: 3px solid;
-  border-radius: 20px;
+  border: calc(3px * var(--ui-size)) solid;
+  border-radius: calc(20px * var(--ui-size));
   display: flex;
-  width: 150px;
-  height: 80px;
+  width: calc(150px * var(--ui-size));
+  height: calc(80px * var(--ui-size));
   font-weight: 400;
-  font-size: 24px;
+  font-size: calc(24px * var(--ui-size));
   font-family: sans-serif;
   text-align: center;
   justify-content: center;
   align-items: center;
-  margin: 12px;
+  margin: calc(12px * var(--ui-size));
   transition: background 0.1s linear;
 }
 
@@ -148,10 +146,10 @@ div#purchase-amount-wrapper {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-bottom: 12px;
+  margin-bottom: calc(12px * var(--ui-size));
   z-index: 1;
   position: sticky;
-  top: 64px;
+  top: calc(64px * var(--ui-size));
 }
 
 div.purchase-amount-selector {
@@ -161,34 +159,35 @@ div.purchase-amount-selector {
 div.price-display, div.purchase-amount-selector {
   background: var(--accent-color);
   width: max-content;
-  padding: 4px 6px;
-  border-radius: 8px;
-  margin: 4px;
+  padding: calc(4px * var(--ui-size)) calc(6px * var(--ui-size));
+  border-radius: calc(8px * var(--ui-size));
+  margin: calc(4px * var(--ui-size));
+  font-size: calc(16px * var(--ui-size))
 }
 
 div.remain-display {
   white-space: pre;
-  font-size: 10px;
-  height: 32px;
+  font-size: calc(10px * var(--ui-size));
+  height: calc(32px * var(--ui-size));
 }
 
 #score {
   font-weight: 400;
-  font-size: 64px;
+  font-size: calc(64px * var(--ui-size));
   font-family: "Inconsolata", monospace;
   text-align: center;
   position: sticky;
   width: 100%;
   top: 0px;
-  margin-top: 40px;
+  margin-top: calc(40px * var(--ui-size));
 }
 
 #settings {
   position: fixed;
-  top: 6px;
-  right: 6px;
+  top: calc(6px * var(--ui-size));
+  right: calc(6px * var(--ui-size));
   margin: 0;
-  padding: 8px;
+  padding: calc(8px * var(--ui-size));
   align-items: end;
   display: flex;
   flex-direction: column;
@@ -196,46 +195,53 @@ div.remain-display {
 
 #settings-panel {
   transition: clip-path 0.3s ease-out;
-  max-height: calc(100vh - 210px);
+  max-height: calc(100vh - 210px * var(--ui-size));
   overflow-y: scroll;
-  max-width: calc(100vw - 32px - 24px);
+  max-width: calc((100vw - (32px + 24px) * var(--ui-size)));
+}
+
+#ui-size {
+  width: 100%;
 }
 
 #settings-button {
   color: #767676;
-  font-size: 40px;
+  font-size: calc(40px * var(--ui-size));
   cursor: pointer;
   background: var(--accent-color);
   border-radius: 50%;
-  padding: 8px;
+  padding: calc(8px * var(--ui-size));
 }
 
 .info {
-  font-size: 12px;
+  font-size: calc(12px * var(--ui-size));
 }
 
 .rounded {
-  border-radius: 16px;
-  padding: 16px;
-  margin: 8px;
+  border-radius: calc(16px * var(--ui-size));
+  padding: calc(16px * var(--ui-size));
+  margin: calc(8px * var(--ui-size));
 }
 
 #fps {
   position: fixed;
-  left: 4px;
-  bottom: 4px;
+  left: calc(4px * var(--ui-size));
+  bottom: calc(4px * var(--ui-size));
   font-family: "Inconsolata", monospace;
-  padding: 6px;
-  border-radius: 8px;
+  padding: calc(6px * var(--ui-size));
+  border-radius: calc(8px * var(--ui-size));
   background: var(--accent-color);
+  font-size: calc(16px * var(--ui-size))
 }
 
 h2 {
-  margin-top: 4px;
-  margin-bottom: 4px;
+  margin-top: calc(4px * var(--ui-size));
+  margin-bottom: calc(4px * var(--ui-size));
+  font-size: calc(24px * var(--ui-size));
 }
 
 h3 {
-  margin-top: 8px;
-  margin-bottom: 8px;
+  margin-top: calc(8px * var(--ui-size));
+  margin-bottom: calc(8px * var(--ui-size));
+  font-size: calc(18px * var(--ui-size));
 }
