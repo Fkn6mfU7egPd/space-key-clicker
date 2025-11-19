@@ -201,36 +201,33 @@ items.forEach(item => {
 
   item.addEventListener('click', () => {
     const {price, multiplier, amount} = item;
-    const price_multiplied = purchase_amount === 1 ? price : (purchase_amount === "max" ? price.mul(new Decimal(multiplier).pow(maxPurchasesFormula(price, multiplier, score)).minus(1)).div(multiplier - 1) : price.mul(new Decimal(multiplier).pow(purchase_amount).minus(1)).div(multiplier - 1));
+    const calculated_purchase_amount = purchase_amount === "max" ? maxPurchasesFormula(price, multiplier, score).toNumber() : purchase_amount;
+    const price_multiplied = purchase_amount === 1 ? price : (purchase_amount === "max" ? price.mul(new Decimal(multiplier).pow(calculated_purchase_amount).minus(1)).div(multiplier - 1) : price.mul(new Decimal(multiplier).pow(calculated_purchase_amount).minus(1)).div(multiplier - 1));
     const action = item.dataset.action;
 
     if (score.lt(price_multiplied)) return;
 
     score = score.sub(price_multiplied);
 
-    item.price = purchase_amount === "max" ?
-      price.mul(multiplier ** maxPurchasesFormula(price, multiplier, score)) :
-      price.mul(multiplier ** purchase_amount);
+    item.price = price.mul(new Decimal(multiplier).pow(calculated_purchase_amount));
 
-    for(let i = 0; i < (purchase_amount === "max" ? maxPurchasesFormula(price, multiplier, score) : purchase_amount); i++){
-      switch(action) {
-        case "cp": clickPower = clickPower.plus(amount); clickPowerDirty = true; break;
-        case "cm": clickMultiplier = clickMultiplier.plus(amount); clickPowerDirty = true; break;
-        case "ap": autoPower = autoPower.plus(amount); autoPowerDirty = true; break;
-        case "am": autoMultiplier = autoMultiplier.plus(amount); autoPowerDirty = true; break;
-        case "mcp": clickPower = clickPower.mul(amount); clickPowerDirty = true; break;
-        case "map": autoPower = autoPower.mul(amount); autoPowerDirty = true; break;
-        case "special":
-          const type = item.dataset.type;
-          if (type === "decrease") {
-            items.forEach(target => {
-              if (target === item) return;
-              target.price = target.price.div(new Decimal(target.multiplier).pow(item.dataset.amount))
-            });
-          }
-          break;
-        default: console.warn("Unknown action:", action);
-      }
+    switch(action) {
+      case "cp": clickPower = clickPower.plus(amount.mul(calculated_purchase_amount)); clickPowerDirty = true; break;
+      case "cm": clickMultiplier = clickMultiplier.plus(amount.mul(calculated_purchase_amount)); clickPowerDirty = true; break;
+      case "ap": autoPower = autoPower.plus(amount.mul(calculated_purchase_amount)); autoPowerDirty = true; break;
+      case "am": autoMultiplier = autoMultiplier.plus(amount.mul(calculated_purchase_amount)); autoPowerDirty = true; break;
+      case "mcp": clickPower = clickPower.mul(amount.pow(calculated_purchase_amount)); clickPowerDirty = true; break;
+      case "map": autoPower = autoPower.mul(amount.pow(calculated_purchase_amount)); autoPowerDirty = true; break;
+      case "special":
+        const type = item.dataset.type;
+        if (type === "decrease") {
+          items.forEach(target => {
+            if (target === item) return;
+            target.price = target.price.div(new Decimal(item.dataset.amount).pow(calculated_purchase_amount))
+          });
+        }
+        break;
+      default: console.warn("Unknown action:", action);
     }
   });
 
@@ -247,8 +244,8 @@ function maxPurchasesFormula(a, x, y){ // 初期価格、倍率、所持金
   const threshold = one.minus(y.div(a).mul(one.minus(x)));
   if (threshold.lte(0)) return 0;
 
-  const n = Decimal.log(threshold, x);
-  return Math.floor(n);
+  const n = threshold.log(x);
+  return n.floor();
 }
 
 function tick(){
