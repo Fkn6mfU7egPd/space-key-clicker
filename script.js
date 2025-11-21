@@ -1,7 +1,10 @@
 const scoreElem = document.querySelector("#score");
 const items = Array.from(document.getElementsByClassName("item"));
 const settingsButton = document.querySelector("#settings-button");
-const formatter = (factor, num = score) => num.div(new Decimal(factor)).toPrecision(3);
+const formatter = (factor, num = score) => {
+  if (num.div(new Decimal(factor)).gte(999.5)) return num.div(new Decimal(factor)).round();
+  return num.div(new Decimal(factor)).toPrecision(3);
+}
 
 let score = new Decimal(0);
 let clickPower = new Decimal(1);
@@ -16,6 +19,7 @@ let formatCfg = {
   type: "Standard",
   whitespaceBeforeSuffix: false,
   uppercaseK: false,
+  formatMaxPurchase: false,
 };
 let isSettingsPanelOpen = false;
 let clickPowerDirty = true;
@@ -61,6 +65,13 @@ document.querySelector("#theme-color-dark").addEventListener("change", event => 
   document.body.style.setProperty("--theme-color-dark", event.target.value);
 });
 
+document.querySelector("#format-max-purchase").addEventListener("change", event => {
+  switch (event.target.value){
+    case "no": formatCfg.formatMaxPurchase = false; break;
+    case "yes": formatCfg.formatMaxPurchase = true; break;
+  }
+});
+
 const toEngineeringNotation = (num, digits = 3) => {
   num = num.abs();
   if (num.lt(1e3)) return num.toPrecision(digits);
@@ -100,26 +111,29 @@ function generateExtendedSuffixes(){
   const suffixes = [];
   const a = ["", "U", "D", "T", "Qa", "Qi", "Sx", "Sp", "O", "N"];
   const b = ["", "Dc", "Vg", "Tg", "Qd", "Qi", "Se", "St", "Og", "Nn"];
-  b.forEach((bSuffix, bIndex) => {
-    a.forEach((aSuffix, aIndex) => {
-      const exp = bIndex * 30 + aIndex * 3;
-      if (bSuffix === ""){
-        suffixes.push({exp, suffix: [
-          "",
-          formatCfg.uppercaseK ? "K" : "k",
-          "M",
-          "B",
-          "T",
-          "Qa",
-          "Qi",
-          "Sx",
-          "Sp",
-          "Oc",
-          "No"
-        ][aIndex]});
-      }else{
-        suffixes.push({exp, suffix: aSuffix + bSuffix});
-      }
+  const c = ["", "Ce", "Dn", "Tc", "Qe", "Qu", "Sc", "Si", "Oe", "Ne"];
+  c.forEach((cSuffix, cIndex) => {
+    b.forEach((bSuffix, bIndex) => {
+      a.forEach((aSuffix, aIndex) => {
+        const exp = cIndex * 300 + bIndex * 30 + aIndex * 3;
+        if (cSuffix === "" && bSuffix === ""){
+          suffixes.push({exp, suffix: [
+            "",
+            formatCfg.uppercaseK ? "K" : "k",
+            "M",
+            "B",
+            "T",
+            "Qa",
+            "Qi",
+            "Sx",
+            "Sp",
+            "Oc",
+            "No"
+          ][aIndex]});
+        }else{
+          suffixes.push({exp, suffix: aSuffix + bSuffix + cSuffix});
+        }
+      });
     });
   });
   suffixes.push({exp: b.length * 30});
@@ -133,6 +147,9 @@ function formatNumber(num){
   if (formatCfg.type === "logarithm") return decimalNum.equals(0) ? "0.00" : "e" + decimalNum.log10().toFixed(2);
   if (formatCfg.type === "engineering") return toEngineeringNotation(decimalNum);
   if (formatCfg.type === "Scientific") return decimalNum.toExponential(2);
+  if (formatCfg.type === "Plain") return num.toFixed(0);
+  if (formatCfg.type === "Comma") return num.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  if (formatCfg.type === "Whitespace") return num.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   const suffixes = (formatCfg.type === "Standard") ? [
     {exp: 3, suffix: (formatCfg.uppercaseK ? "K" : "k")},
     {exp: 6, suffix: "M"},
@@ -153,6 +170,13 @@ function formatNumber(num){
     {exp: 21, suffix: "S"},
     {exp: 24, suffix: "Sp"},
     {exp: 27}
+  ] : (formatCfg.type === "Kanji") ? [
+    {exp: 4, suffix: "万"},
+    {exp: 8, suffix: "億"},
+    {exp: 12, suffix: "兆"},
+    {exp: 16, suffix: "京"},
+    {exp: 20, suffix: "核"},
+    {exp: 24}
   ] : (formatCfg.type === "Extended") ? extendedSuffixes : [
     {exp: 0}
   ];
@@ -267,7 +291,7 @@ function tick(){
         remainDisplay.textContent += " / " + formatNumber(remain.div(autoPower.mul(autoMultiplier))) + "秒)";
       };
     }else{
-      remainDisplay.textContent = maxPurchasesFormula(price, multiplier, score).toString() + "個購入可能";
+      remainDisplay.textContent = (formatCfg.formatMaxPurchase ? formatNumber(maxPurchasesFormula(price, multiplier, score)) : maxPurchasesFormula(price, multiplier, score).toString()) + "個購入可能";
     }
   });
 

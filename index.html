@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <div id="accurateScore">Accurate score display feature is now creating, please wait for a few moments... (when hovering a main score display, this text will change color to red)</div>
   <div id="score">Loading...</div>
   <div id="powerDisplay">
     <div id="clickPowerDisplay">...</div>
@@ -32,6 +31,10 @@
         <form id="notation">
           <label><input type="radio" name="notation" value="Classic">クラシック</label><br>
           <label><input type="radio" name="notation" value="Standard" checked>スタンダード (デフォルト)</label><br>
+          <label><input type="radio" name="notation" value="Plain">プレーン</label><br>
+          <label><input type="radio" name="notation" value="Comma">カンマ区切り</label><br>
+          <label><input type="radio" name="notation" value="Whitespace">半角スペース区切り</label><br>
+          <label><input type="radio" name="notation" value="Kanji">漢数字</label><br>
           <label><input type="radio" name="notation" value="Extended">拡張</label><br>
           <label><input type="radio" name="notation" value="Scientific">科学的記数法</label><br>
           <label><input type="radio" name="notation" value="Engineering">工学的記数法</label><br>
@@ -39,7 +42,7 @@
         </form>
       </section>
       <section>
-        <div class="info">クラシック: Q, Qui, S, Sp, Engineering<br>スタンダード: Qa, Qi, Sx, Sp, Engineering<br><br>(10 000 000の表記例)<br>科学的記数法: 1e7<br>工学的記数法: 10e6<br>対数表記: e7.00</div>
+        <div class="info">クラシック: Q, Qui, S, Sp, Engineering<br>スタンダード: Qa, Qi, Sx, Sp, Engineering<br><br>(10 000 000の表記例)<br>漢数字: 1000万<br>科学的記数法: 1e7<br>工学的記数法: 10e6<br>対数表記: e7.00</div>
         <h3>接尾辞の前のホワイトスペース</h3>
         <form id="whitespaceBeforeSuffix">
           <label>
@@ -61,9 +64,9 @@
       </section>
       <section>
         <h3>購入可能回数の数を短縮する</h3>
-        <form id="purchase-count-format">
-          <label><input type="radio" name="purchase-count-format" value="no" checked disabled>しない (デフォルト)</label><br>
-          <label><input type="radio" name="purchase-count-format" value="yes" disabled>する</label><br>
+        <form id="format-max-purchase">
+          <label><input type="radio" name="format-max-purchase" value="no" checked>しない (デフォルト)</label>
+          <label><input type="radio" name="format-max-purchase" value="yes">する</label>
         </form>
       </section>
       <section>
