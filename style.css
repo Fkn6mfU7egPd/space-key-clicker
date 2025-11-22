@@ -96,10 +96,12 @@ div.item {
 
 form#theme-color-light {
   display: var(--settings-theme-color-light);
+  background: white;
 }
 
 form#theme-color-dark {
   display: var(--settings-theme-color-dark);
+  background: #2c2c2c;
 }
 
 .info {
@@ -139,7 +141,7 @@ div.item {
   justify-content: center;
   align-items: center;
   margin: calc(12px * var(--ui-size));
-  transition: background 0.1s linear;
+  transition: background 0.1s linear, width 0.1s linear, border-radius 0.1s linear, margin 0.1s linear;
 }
 
 div#purchase-amount-wrapper {
@@ -163,7 +165,8 @@ div.price-display, div.purchase-amount-selector {
   padding: calc(4px * var(--ui-size)) calc(6px * var(--ui-size));
   border-radius: calc(8px * var(--ui-size));
   margin: calc(4px * var(--ui-size));
-  font-size: calc(16px * var(--ui-size))
+  font-size: calc(16px * var(--ui-size));
+  transition: border-radius 0.1s linear;
 }
 
 div.remain-display {
@@ -196,7 +199,7 @@ div.remain-display {
 }
 
 #settings-panel {
-  transition: clip-path 0.3s ease-out;
+  transition: clip-path 0.3s ease-out, border-radius 0.1s linear;
   max-height: calc(100vh - 210px * var(--ui-size));
   overflow-y: scroll;
   max-width: calc((100vw - (32px + 24px) * var(--ui-size)));
@@ -223,6 +226,7 @@ div.remain-display {
   border-radius: calc(16px * var(--ui-size));
   padding: calc(16px * var(--ui-size));
   margin: calc(8px * var(--ui-size));
+  transition: border-radius 0.1s linear;
 }
 
 #fps {
@@ -233,7 +237,8 @@ div.remain-display {
   padding: calc(6px * var(--ui-size));
   border-radius: calc(8px * var(--ui-size));
   background: var(--accent-color);
-  font-size: calc(16px * var(--ui-size))
+  font-size: calc(16px * var(--ui-size));
+  transition: border-radius 0.1s linear;
 }
 
 h2 {
