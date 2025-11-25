@@ -75,6 +75,8 @@ document.querySelector("#background-color").addEventListener("change", event => 
   background_color = event.target.value;
   if (event.target.value === "Custom"){
     document.body.style.setProperty("--background", document.getElementById("custom-background-color").value);
+  }else if (event.target.value === "null"){
+    document.body.style.removeProperty("--background")
   }else{
     document.body.style.setProperty("--background", event.target.value);
   }
