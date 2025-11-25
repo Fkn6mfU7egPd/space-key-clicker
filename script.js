@@ -12,7 +12,7 @@ let prevTime = Date.now();
 let pressing = false;
 let purchase_amount = 1;
 let fps = 0;
-let background_color = "unset";
+let background_color = "null";
 let fpsPrevTime = Date.now();
 let formatCfg = {
   type: "Standard", // Classic (Q,Qui,S,Sp...) | Standard (Qa,Qi,Sx,Sp...)
@@ -76,16 +76,17 @@ document.querySelector("#background-color").addEventListener("change", event => 
   if (event.target.value === "Custom"){
     document.body.style.setProperty("--background", document.getElementById("custom-background-color").value);
   }else if (event.target.value === "null"){
-    document.body.style.removeProperty("--background")
+    document.body.style.removeProperty("--background");
+  }else if (event.target.closest("#custom-background-color")){
+    return;
   }else{
     document.body.style.setProperty("--background", event.target.value);
   }
 });
 
 document.querySelector("#custom-background-color").addEventListener("input", event => {
-  if (background_color === "Custom"){
-    document.body.style.setProperty("--background", event.target.value);
-  }
+  document.querySelector('input[name="background-color"][value="Custom"]').checked = true;
+  document.body.style.setProperty("--background", event.target.value);
 });
 
 // 有効数字digits桁まで切り落とす
