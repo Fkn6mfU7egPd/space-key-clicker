@@ -144,7 +144,7 @@ const extendedSuffixes = generateExtendedSuffixes();
 
 function formatNumber(num){
   const decimalNum = new Decimal(num);
-  if (formatCfg.type === "logarithm") return decimalNum.equals(0) ? "0.00" : "e" + decimalNum.log10().toFixed(2);
+  if (formatCfg.type === "logarithm") return decimalNum.equals(0) ? "0.00" : "e" + (decimalNum.log10() >= 100000 ? formatNumber(decimalNum.log10()) : decimalNum.log10().toFixed(2));
   if (formatCfg.type === "engineering") return toEngineeringNotation(decimalNum);
   if (formatCfg.type === "Scientific") return decimalNum.toExponential(2);
   if (formatCfg.type === "Plain") return num.toFixed(0);
