@@ -54,6 +54,34 @@ document.querySelector("#uppercase-k").addEventListener("change", event => {
   autoPowerDirty = true;
 });
 
+document.querySelector("#design").addEventListener("change", event => {
+  switch (event.target.value){
+    case "Original":
+      items.forEach(item => {
+        item.style.width = "calc(120px * var(--ui-size))";
+        item.style.borderRadius = "0";
+      });
+      Array.from(document.querySelectorAll(".price-display, .purchase-amount-selector, .rounded")).forEach(elem => {
+        elem.style.borderRadius = "0";
+      });
+      document.getElementById("fps").style.borderRadius = "0";
+      scoreElem.style.backdropFilter = "none";
+      document.getElementById("purchase-amount-wrapper").style.backdropFilter = "none";
+      break;
+    case "Modern":
+      items.forEach(item => {
+        item.style = null;
+      });
+      Array.from(document.querySelectorAll(".price-display, .purchase-amount-selector, .rounded")).forEach(elem => {
+        elem.style.borderRadius = null;
+      });
+      document.getElementById("fps").style = null;
+      scoreElem.style = null;
+      document.getElementById("purchase-amount-wrapper").style.backdropFilter = null;
+      break;
+  }
+});
+
 document.querySelector("#theme-color-light").addEventListener("change", event => {
   document.body.style.setProperty("--theme-color-light", event.target.value);
 });
