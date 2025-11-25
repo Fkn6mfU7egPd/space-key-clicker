@@ -81,6 +81,11 @@ const toExponential = (num, digits = 3) => {
 }
 
 addEventListener("click", event => {
+  if (!event.target.closest("#settings-button") && !event.target.closest("#settings-panel") && isSettingsPanelOpen){
+    document.querySelector("#settings-panel").style.clipPath = "inset(0 0 100% 0)";
+    isSettingsPanelOpen = !isSettingsPanelOpen;
+    return;
+  }
   if (event.target.closest(".item-block") || event.target.closest("#settings-button") || (event.target.closest("#settings-panel") && isSettingsPanelOpen) || event.target.closest("#powerDisplay") || event.target.closest(".purchase-amount-selector")) return;
   score = score.plus(clickPower.mul(clickMultiplier));
 });
@@ -99,7 +104,7 @@ settingsButton.addEventListener("click", () => {
     isSettingsPanelOpen = !isSettingsPanelOpen;
   }else{
     document.querySelector("#purchase-amount-wrapper").style.zIndex = "auto";
-    document.querySelector("#settings-panel").style.clipPath = "inset(0 0 0 0)";
+    document.querySelector("#settings-panel").style.clipPath = "inset(0)";
     isSettingsPanelOpen = !isSettingsPanelOpen;
   }
 });
