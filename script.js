@@ -263,8 +263,8 @@ items.forEach(item => {
         const type = item.dataset.type;
         if (type === "decrease") {
           items.forEach(target => {
-            if (target.dataset.action === "decrease") return;
-            target.price = target.price.div(new Decimal(item.dataset.amount).pow(calculated_purchase_amount))
+            if (target.dataset.type === "decrease") return;
+            target.price = target.price.div(new Decimal(item.dataset.amount).pow(calculated_purchase_amount));
           });
         }
         break;
