@@ -79,6 +79,14 @@ const toEngineeringNotation = (num, digits = 3) => {
   return mantissa.toPrecision(digits) + (formatCfg.whitespaceBeforeSuffix ? " " : "") + (formatCfg.type === "Classic" ? "E" : "e") + Math.floor(num.log10() / 3) * 3;
 }
 
+const toLogarithmNotation = (num, digits = 3, threshold = 1e6) => {
+  if (num.equals(0)) return "0." + "0".repeat(digits - 1);
+  const log10 = num.log10();
+  if (num.lt(threshold)) return num.toFixed(Math.max(0, digits - Math.floor(log10 + 1)));
+  if (log10 < threshold) return "e" + log10.toFixed(digits - 1);
+  return "e" + toLogarithmNotation(new Decimal(log10), digits, threshold);
+}
+
 addEventListener("click", event => {
   if (event.target.closest(".item-block") || event.target.closest("#settings-button") || (event.target.closest("#settings-panel") && isSettingsPanelOpen) || event.target.closest("#powerDisplay")) return;
   score = score.plus(clickPower.mul(clickMultiplier));
@@ -144,7 +152,7 @@ const extendedSuffixes = generateExtendedSuffixes();
 
 function formatNumber(num){
   const decimalNum = new Decimal(num);
-  if (formatCfg.type === "logarithm") return decimalNum.equals(0) ? "0.00" : "e" + (decimalNum.log10() >= 100000 ? formatNumber(decimalNum.log10()) : decimalNum.log10().toFixed(2));
+  if (formatCfg.type === "logarithm") return toLogarithmNotation(num);
   if (formatCfg.type === "engineering") return toEngineeringNotation(decimalNum);
   if (formatCfg.type === "Scientific") return decimalNum.toExponential(2);
   if (formatCfg.type === "Plain") return num.toFixed(0);
