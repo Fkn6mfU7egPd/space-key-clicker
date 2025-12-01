@@ -79,13 +79,19 @@ const toEngineeringNotation = (num, digits = 3) => {
   return mantissa.toPrecision(digits) + (formatCfg.whitespaceBeforeSuffix ? " " : "") + (formatCfg.type === "Classic" ? "E" : "e") + Math.floor(num.log10() / 3) * 3;
 }
 
-const toLogarithmNotation = (num, digits = 3, threshold = 1e6) => {
-  if (num.equals(0)) return "0." + "0".repeat(digits - 1);
+const toAntimatterDimensionsLikeNotation = (num) => {
+  if (num.equals(0)) return "0";
   const log10 = num.log10();
-  if (num.lt(threshold)) return num.toFixed(Math.max(0, digits - Math.floor(log10 + 1)));
-  if (log10 < threshold) return "e" + log10.toFixed(digits - 1);
-  return "e" + toLogarithmNotation(new Decimal(log10), digits, threshold);
-}
+  if (log10 >= 3) return "e" + log10.toFixed(2);
+  return num.toFixed(log10 < 2 ? 1 : 0);
+};
+
+const toExponentialIdleLikeNotation = (num) => {
+  const log10 = num.log10();
+  if (log10 >= 1e6) return "ee" + Math.log10(log10).toFixed(Math.max(0, 5 - Math.ceil(Math.log10(Math.log10(log10)))));
+  if (log10 >= 6) return num.mantissa.toFixed(Math.max(0, 5 - Math.ceil(Math.log10(Math.floor(log10))))) + "e" + Math.floor(log10);
+  return num.toFixed(4 - Math.max(0, Math.min(4, Math.ceil(log10))));
+};
 
 addEventListener("click", event => {
   if (event.target.closest(".item-block") || event.target.closest("#settings-button") || (event.target.closest("#settings-panel") && isSettingsPanelOpen) || event.target.closest("#powerDisplay")) return;
@@ -152,7 +158,8 @@ const extendedSuffixes = generateExtendedSuffixes();
 
 function formatNumber(num){
   const decimalNum = new Decimal(num);
-  if (formatCfg.type === "logarithm") return toLogarithmNotation(num);
+  if (formatCfg.type === "antimatter-dimensions-like") return toAntimatterDimensionsLikeNotation(num);
+  if (formatCfg.type === "exponential-idle-like") return toExponentialIdleLikeNotation(num);
   if (formatCfg.type === "engineering") return toEngineeringNotation(decimalNum);
   if (formatCfg.type === "Scientific") return decimalNum.toExponential(2);
   if (formatCfg.type === "Plain") return num.toFixed(0);
